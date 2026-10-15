@@ -1,0 +1,915 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Cavalli Wears - Owner Admin Portal</title>
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'sans-serif'],
+            serif: ['"Playfair Display"', 'serif'],
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    .custom-scrollbar::-webkit-scrollbar { width: 6px; }
+    .custom-scrollbar::-webkit-scrollbar-track { background: #f5f5f4; }
+    .custom-scrollbar::-webkit-scrollbar-thumb { background: #d6d3d1; border-radius: 9999px; }
+  </style>
+</head>
+<body class="bg-stone-100 text-stone-900 min-h-screen flex flex-col font-sans">
+
+  <!-- ================= LOGIN SCREEN (SHOWN WHEN NOT LOGGED IN) ================= -->
+  <div id="loginSection" class="min-h-screen flex items-center justify-center p-4 bg-stone-950">
+    <div class="bg-stone-900 border border-stone-800 rounded-3xl p-8 max-w-md w-full shadow-2xl text-center space-y-6 text-white">
+      <div class="w-16 h-16 rounded-2xl bg-amber-500 text-stone-950 flex items-center justify-center mx-auto text-2xl font-black shadow-lg shadow-amber-500/20">
+        <i class="fa-solid fa-lock"></i>
+      </div>
+
+      <div>
+        <h2 class="text-2xl font-bold font-serif">Cavalli Wears Owner Portal</h2>
+        <p class="text-xs text-stone-400 mt-1.5">Restricted area: Enter your owner access password to manage products and orders.</p>
+      </div>
+
+      <form onsubmit="handleAdminLogin(event)" class="space-y-4 text-left">
+        <div>
+          <label class="block text-xs font-bold text-amber-300 uppercase tracking-wider mb-1.5" for="adminPasswordInput">
+            Owner Password
+          </label>
+          <div class="relative">
+            <input 
+              type="password" 
+              id="adminPasswordInput" 
+              required 
+              placeholder="Enter password..." 
+              class="w-full text-sm pl-4 pr-10 py-3 rounded-xl bg-stone-800 text-white border border-stone-700 focus:outline-none focus:ring-2 focus:ring-amber-500"
+            />
+            <button 
+              type="button" 
+              onclick="togglePasswordVisibility()" 
+              class="absolute right-3 top-1/2 -translate-y-1/2 text-stone-400 hover:text-white text-xs"
+            >
+              <i id="eyeIcon" class="fa-solid fa-eye"></i>
+            </button>
+          </div>
+          <p class="text-[11px] text-stone-400 mt-1.5">Default password: <span class="text-amber-400 font-mono font-bold">cavalli123</span></p>
+        </div>
+
+        <div id="loginErrorMessage" class="hidden text-xs text-red-400 bg-red-950/50 p-2.5 rounded-lg border border-red-800">
+          Incorrect password. Please try again.
+        </div>
+
+        <button 
+          type="submit" 
+          class="w-full bg-amber-500 hover:bg-amber-400 text-stone-950 font-black py-3 rounded-xl transition shadow-lg shadow-amber-500/20 text-sm active:scale-95"
+        >
+          Access Owner Dashboard
+        </button>
+      </form>
+
+      <div class="pt-2 border-t border-stone-800 text-xs text-stone-400">
+        <a href="index.html" class="hover:text-amber-400 transition flex items-center justify-center gap-1.5">
+          <i class="fa-solid fa-arrow-left text-xs"></i>
+          <span>Return to Customer Storefront</span>
+        </a>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= AUTHENTICATED DASHBOARD ================= -->
+  <div id="dashboardSection" class="hidden min-h-screen flex flex-col">
+    
+    <!-- Top Admin Header -->
+    <header class="bg-stone-950 text-white border-b border-stone-800 sticky top-0 z-30">
+      <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between">
+        
+        <!-- Brand & Title -->
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500 text-stone-950 flex items-center justify-center font-bold">
+            <i class="fa-solid fa-crown text-base"></i>
+          </div>
+          <div>
+            <h1 class="text-lg font-bold font-serif flex items-center gap-2">
+              <span>Cavalli Wears</span>
+              <span class="text-[10px] font-sans font-extrabold uppercase px-2 py-0.5 rounded-full bg-amber-500/20 text-amber-400 border border-amber-500/30">Owner Mode</span>
+            </h1>
+            <p class="text-xs text-stone-400">Products & Customer Orders Control Room</p>
+          </div>
+        </div>
+
+        <!-- Header Actions -->
+        <div class="flex items-center gap-3">
+          <a 
+            href="search.html" 
+            target="_blank" 
+            class="hidden sm:inline-flex items-center gap-2 text-xs font-semibold px-3.5 py-2.5 rounded-xl bg-stone-800 text-stone-300 hover:text-white hover:bg-stone-750 transition"
+          >
+            <i class="fa-solid fa-magnifying-glass text-amber-400"></i>
+            <span>Search Page</span>
+          </a>
+
+          <a 
+            href="index.html" 
+            target="_blank" 
+            class="hidden sm:inline-flex items-center gap-2 text-xs font-semibold px-4 py-2.5 rounded-xl bg-stone-800 text-stone-300 hover:text-white hover:bg-stone-750 transition"
+          >
+            <i class="fa-solid fa-store text-amber-400"></i>
+            <span>View Live Website</span>
+          </a>
+
+          <button 
+            onclick="handleLogout()" 
+            class="inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-2.5 rounded-xl bg-red-950/40 text-red-400 border border-red-900/60 hover:bg-red-900/50 transition active:scale-95"
+          >
+            <i class="fa-solid fa-right-from-bracket"></i>
+            <span>Logout</span>
+          </button>
+        </div>
+
+      </div>
+    </header>
+
+    <!-- Main Admin Container -->
+    <main class="max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 flex-1 space-y-8">
+      
+      <!-- Stats Summary Cards -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+        <div class="bg-white rounded-2xl p-5 border border-stone-200/90 shadow-xs">
+          <div class="flex items-center justify-between text-stone-400 mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider">Total Received Orders</span>
+            <div class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-clipboard-list"></i>
+            </div>
+          </div>
+          <div class="text-2xl font-black text-stone-900" id="statTotalOrders">0</div>
+          <span class="text-[11px] text-stone-500">Customer purchases</span>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-stone-200/90 shadow-xs">
+          <div class="flex items-center justify-between text-stone-400 mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider">Total Revenue</span>
+            <div class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-money-bill-wave"></i>
+            </div>
+          </div>
+          <div class="text-2xl font-black text-emerald-600" id="statTotalRevenue">₦0</div>
+          <span class="text-[11px] text-stone-500">Gross order value</span>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-stone-200/90 shadow-xs">
+          <div class="flex items-center justify-between text-stone-400 mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider">Wears in Catalog</span>
+            <div class="w-8 h-8 rounded-lg bg-amber-50 text-amber-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-shirt"></i>
+            </div>
+          </div>
+          <div class="text-2xl font-black text-stone-900" id="statTotalProducts">0</div>
+          <span class="text-[11px] text-stone-500">Currently published</span>
+        </div>
+
+        <div class="bg-white rounded-2xl p-5 border border-stone-200/90 shadow-xs">
+          <div class="flex items-center justify-between text-stone-400 mb-2">
+            <span class="text-xs font-bold uppercase tracking-wider">Pending Bank Transfers</span>
+            <div class="w-8 h-8 rounded-lg bg-purple-50 text-purple-600 flex items-center justify-center text-sm">
+              <i class="fa-solid fa-building-columns"></i>
+            </div>
+          </div>
+          <div class="text-2xl font-black text-purple-700" id="statPendingTransfers">0</div>
+          <span class="text-[11px] text-stone-500">Awaiting verification</span>
+        </div>
+      </div>
+
+      <!-- Navigation Tabs -->
+      <div class="flex border-b border-stone-200 gap-4 text-sm font-bold">
+        <button 
+          id="tabBtnOrders" 
+          onclick="switchTab('orders')" 
+          class="pb-3 border-b-2 border-stone-950 text-stone-950 flex items-center gap-2"
+        >
+          <i class="fa-solid fa-clipboard-check text-amber-600"></i>
+          <span>Customer Orders (<span id="tabOrderCount">0</span>)</span>
+        </button>
+
+        <button 
+          id="tabBtnProducts" 
+          onclick="switchTab('products')" 
+          class="pb-3 border-b-2 border-transparent text-stone-400 hover:text-stone-700 flex items-center gap-2"
+        >
+          <i class="fa-solid fa-boxes-stacked"></i>
+          <span>Manage Wears & Catalog</span>
+        </button>
+
+        <button 
+          id="tabBtnCustomers" 
+          onclick="switchTab('customers')" 
+          class="pb-3 border-b-2 border-transparent text-stone-400 hover:text-stone-700 flex items-center gap-2"
+        >
+          <i class="fa-solid fa-users"></i>
+          <span>Registered Customers (<span id="tabCustomerCount">0</span>)</span>
+        </button>
+
+        <button 
+          id="tabBtnBank" 
+          onclick="switchTab('bank')" 
+          class="pb-3 border-b-2 border-transparent text-stone-400 hover:text-stone-700 flex items-center gap-2"
+        >
+          <i class="fa-solid fa-building-columns"></i>
+          <span>Store Bank Account Details</span>
+        </button>
+
+        <button 
+          id="tabBtnSecurity" 
+          onclick="switchTab('security')" 
+          class="pb-3 border-b-2 border-transparent text-stone-400 hover:text-stone-700 flex items-center gap-2"
+        >
+          <i class="fa-solid fa-shield-halved"></i>
+          <span>Password Settings</span>
+        </button>
+      </div>
+
+      <!-- ================= TAB 1: CUSTOMER ORDERS ================= -->
+      <section id="tabContentOrders" class="space-y-4">
+        <div class="flex flex-wrap items-center justify-between gap-4">
+          <div>
+            <h2 class="text-xl font-bold font-serif text-stone-900">Received Customer Orders</h2>
+            <p class="text-xs text-stone-500">Review buyer contact, delivery address, ordered items, and Nigerian bank transfer details.</p>
+          </div>
+          <button 
+            onclick="clearAllOrders()" 
+            class="text-xs font-semibold px-4 py-2 rounded-xl border border-red-200 text-red-600 hover:bg-red-50 transition"
+          >
+            Clear Order History
+          </button>
+        </div>
+
+        <div id="adminOrdersContainer" class="space-y-4">
+          <!-- Rendered dynamically -->
+        </div>
+
+        <div id="adminNoOrders" class="hidden bg-white rounded-3xl p-12 text-center border border-dashed border-stone-300">
+          <i class="fa-solid fa-inbox text-4xl text-stone-300 mb-3 block"></i>
+          <h3 class="text-base font-bold text-stone-700">No orders received yet</h3>
+          <p class="text-xs text-stone-400 mt-1 max-w-sm mx-auto">When customers place orders from your public website, their full contact details and bank transfer proofs will show right here.</p>
+        </div>
+      </section>
+
+      <!-- ================= TAB 2: MANAGE PRODUCTS ================= -->
+      <section id="tabContentProducts" class="hidden space-y-8">
+        
+        <!-- Post New Product Form -->
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 shadow-xs">
+          <div class="max-w-xl mb-6">
+            <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Owner Action</span>
+            <h2 class="text-2xl font-bold font-serif text-stone-900 mt-0.5">Post New Wear to Cavalli Wears</h2>
+            <p class="text-xs text-stone-500 mt-1">Publish an item to your public store. Customers will instantly be able to view and order it.</p>
+          </div>
+
+          <form onsubmit="handleAdminCreateProduct(event)" class="space-y-4 max-w-3xl">
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="pTitle">
+                  Product / Wear Title <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="text" 
+                  id="pTitle" 
+                  required 
+                  placeholder="e.g. Cavalli Royal Velvet Dinner Blazer" 
+                  class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="pCategory">
+                  Category <span class="text-red-500">*</span>
+                </label>
+                <select 
+                  id="pCategory" 
+                  required 
+                  class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500 bg-white"
+                >
+                  <option value="Suits & Blazers">Suits & Blazers</option>
+                  <option value="Shirts & Tops">Shirts & Tops</option>
+                  <option value="Designer Caps & Hats">Designer Caps & Hats</option>
+                  <option value="Footwear & Shoes">Footwear & Shoes</option>
+                  <option value="Streetwear">Streetwear</option>
+                  <option value="Luxury Accessories">Luxury Accessories</option>
+                  <option value="Traditional & Native">Traditional & Native</option>
+                </select>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="pPrice">
+                  Price in Naira (₦) <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="number" 
+                  id="pPrice" 
+                  required 
+                  min="500" 
+                  step="100" 
+                  placeholder="e.g. 85000" 
+                  class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="pImage">
+                  High-Resolution Image URL <span class="text-red-500">*</span>
+                </label>
+                <input 
+                  type="url" 
+                  id="pImage" 
+                  required 
+                  placeholder="https://images.unsplash.com/photo-..." 
+                  class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+                <p class="text-[11px] text-stone-400 mt-1">Copy and paste any direct photo URL from Unsplash or your image host.</p>
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="pBadge">
+                  Badge Tag (Optional)
+                </label>
+                <input 
+                  type="text" 
+                  id="pBadge" 
+                  placeholder="e.g. Cavalli Signature, New Drop, Limited" 
+                  class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+
+              <div>
+                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="pRating">
+                  Rating Stars (Default: 5.0)
+                </label>
+                <input 
+                  type="number" 
+                  id="pRating" 
+                  min="1" 
+                  max="5" 
+                  step="0.1" 
+                  value="5.0" 
+                  class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                />
+              </div>
+
+              <div class="sm:col-span-2">
+                <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="pDescription">
+                  Product Description <span class="text-red-500">*</span>
+                </label>
+                <textarea 
+                  id="pDescription" 
+                  rows="3" 
+                  required 
+                  placeholder="Detail fabric material, fit, cut, styling advice, and sizing info..." 
+                  class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+                ></textarea>
+              </div>
+            </div>
+
+            <div class="pt-2">
+              <button 
+                type="submit" 
+                class="bg-stone-950 hover:bg-stone-850 text-white font-bold px-6 py-3 rounded-xl transition shadow-md flex items-center gap-2 text-sm"
+              >
+                <i class="fa-solid fa-plus text-amber-400"></i>
+                <span>Publish to Public Storefront</span>
+              </button>
+            </div>
+          </form>
+        </div>
+
+        <!-- Current Products List (with Delete / Edit) -->
+        <div class="space-y-4">
+          <div class="flex items-center justify-between">
+            <div>
+              <h3 class="text-xl font-bold font-serif text-stone-900">Current Catalog Products</h3>
+              <p class="text-xs text-stone-500">Items currently displayed on the customer website (<span id="catalogCount">0</span> items)</p>
+            </div>
+          </div>
+
+          <div id="adminProductList" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+            <!-- Rendered dynamically -->
+          </div>
+        </div>
+
+      </section>
+
+      <!-- ================= TAB: REGISTERED CUSTOMERS ================= -->
+      <section id="tabContentCustomers" class="hidden space-y-4">
+        <div>
+          <h2 class="text-xl font-bold font-serif text-stone-900">Registered Customer Accounts</h2>
+          <p class="text-xs text-stone-500">View customer profiles registered to order on Cavalli Wears.</p>
+        </div>
+
+        <div id="adminCustomersContainer" class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <!-- Populated via JS -->
+        </div>
+
+        <div id="adminNoCustomers" class="hidden bg-white rounded-3xl p-12 text-center border border-dashed border-stone-300">
+          <i class="fa-solid fa-users text-4xl text-stone-300 mb-3 block"></i>
+          <h3 class="text-base font-bold text-stone-700">No customer accounts registered yet</h3>
+          <p class="text-xs text-stone-400 mt-1 max-w-sm mx-auto">When visitors sign up on your website to place orders, their contact and address profiles will appear here.</p>
+        </div>
+      </section>
+
+      <!-- ================= TAB 3: STORE BANK ACCOUNT ================= -->
+      <section id="tabContentBank" class="hidden space-y-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 max-w-2xl shadow-xs">
+          <div class="mb-6">
+            <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Payment Configuration</span>
+            <h2 class="text-2xl font-bold font-serif text-stone-900 mt-0.5">Your Nigerian Bank Account</h2>
+            <p class="text-xs text-stone-500 mt-1">Customers transferring money for orders will see this exact account on the checkout page.</p>
+          </div>
+
+          <form onsubmit="handleAdminSaveBank(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="bankName">
+                Bank Name <span class="text-red-500">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="bankName" 
+                required 
+                placeholder="e.g. Zenith Bank, GTBank, Access Bank, OPay..." 
+                class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="accountName">
+                Account Name <span class="text-red-500">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="accountName" 
+                required 
+                placeholder="e.g. Cavalli Wears Global Ltd" 
+                class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="accountNumber">
+                Account Number (10 Digits) <span class="text-red-500">*</span>
+              </label>
+              <input 
+                type="text" 
+                id="accountNumber" 
+                required 
+                maxlength="10" 
+                placeholder="e.g. 7045960867" 
+                class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500 font-mono font-bold"
+              />
+            </div>
+
+            <div class="pt-2">
+              <button 
+                type="submit" 
+                class="bg-amber-500 hover:bg-amber-400 text-stone-950 font-black px-6 py-3 rounded-xl transition shadow-md text-sm"
+              >
+                Save Bank Details
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+      <!-- ================= TAB 4: PASSWORD / SECURITY ================= -->
+      <section id="tabContentSecurity" class="hidden space-y-4">
+        <div class="bg-white rounded-3xl p-6 sm:p-8 border border-stone-200 max-w-lg shadow-xs">
+          <div class="mb-6">
+            <span class="text-xs font-bold text-amber-600 uppercase tracking-wider">Security</span>
+            <h2 class="text-2xl font-bold font-serif text-stone-900 mt-0.5">Change Owner Password</h2>
+            <p class="text-xs text-stone-500 mt-1">Update your password to keep the admin portal exclusive to you.</p>
+          </div>
+
+          <form onsubmit="handleChangePassword(event)" class="space-y-4">
+            <div>
+              <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="currPass">
+                Current Password <span class="text-red-500">*</span>
+              </label>
+              <input 
+                type="password" 
+                id="currPass" 
+                required 
+                class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div>
+              <label class="block text-xs font-bold text-stone-700 uppercase tracking-wider mb-1" for="newPass">
+                New Password <span class="text-red-500">*</span>
+              </label>
+              <input 
+                type="password" 
+                id="newPass" 
+                required 
+                minlength="4" 
+                class="w-full text-sm px-4 py-2.5 rounded-xl border border-stone-200 focus:outline-none focus:ring-2 focus:ring-amber-500"
+              />
+            </div>
+
+            <div class="pt-2">
+              <button 
+                type="submit" 
+                class="bg-stone-950 hover:bg-stone-850 text-white font-bold px-6 py-3 rounded-xl transition shadow-md text-sm"
+              >
+                Update Password
+              </button>
+            </div>
+          </form>
+        </div>
+      </section>
+
+    </main>
+
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="adminToast" class="fixed bottom-6 right-6 z-50 bg-stone-950 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none text-xs font-medium border border-stone-800">
+    <i class="fa-solid fa-circle-check text-amber-400 text-base"></i>
+    <span id="adminToastMsg">Changes saved!</span>
+  </div>
+
+  <!-- Admin Script Logic -->
+  <script>
+    const DEFAULT_ADMIN_PASS = "cavalli123";
+    let isAuthenticated = false;
+
+    // Currency helper
+    function formatNaira(amount) {
+      const num = Number(amount) || 0;
+      return "₦" + num.toLocaleString('en-NG', { maximumFractionDigits: 0 });
+    }
+
+    // Check session on load
+    document.addEventListener("DOMContentLoaded", () => {
+      const sessionAuth = sessionStorage.getItem("cavalli_owner_auth");
+      if (sessionAuth === "true") {
+        showDashboard();
+      } else {
+        showLogin();
+      }
+    });
+
+    function showLogin() {
+      document.getElementById("loginSection").classList.remove("hidden");
+      document.getElementById("dashboardSection").classList.add("hidden");
+    }
+
+    function showDashboard() {
+      document.getElementById("loginSection").classList.add("hidden");
+      document.getElementById("dashboardSection").classList.remove("hidden");
+      loadAdminData();
+    }
+
+    function handleAdminLogin(e) {
+      e.preventDefault();
+      const entered = document.getElementById("adminPasswordInput").value.trim();
+      const stored = localStorage.getItem("cavalli_admin_password") || DEFAULT_ADMIN_PASS;
+
+      if (entered === stored) {
+        sessionStorage.setItem("cavalli_owner_auth", "true");
+        document.getElementById("loginErrorMessage").classList.add("hidden");
+        showDashboard();
+      } else {
+        document.getElementById("loginErrorMessage").classList.remove("hidden");
+      }
+    }
+
+    function handleLogout() {
+      sessionStorage.removeItem("cavalli_owner_auth");
+      window.location.reload();
+    }
+
+    function togglePasswordVisibility() {
+      const input = document.getElementById("adminPasswordInput");
+      const icon = document.getElementById("eyeIcon");
+      if (input.type === "password") {
+        input.type = "text";
+        icon.classList.remove("fa-eye");
+        icon.classList.add("fa-eye-slash");
+      } else {
+        input.type = "password";
+        icon.classList.remove("fa-eye-slash");
+        icon.classList.add("fa-eye");
+      }
+    }
+
+    // Load Data
+    function loadAdminData() {
+      const prods = JSON.parse(localStorage.getItem("cavalli_products") || "[]");
+      const orders = JSON.parse(localStorage.getItem("cavalli_orders") || "[]");
+      const users = JSON.parse(localStorage.getItem("cavalli_users") || "[]");
+      let bank = JSON.parse(localStorage.getItem("cavalli_store_bank") || '{"bankName":"OPay","accountName":"Cavalli Wears","accountNumber":"7045960867"}');
+      if (bank.accountNumber === "1019283746") {
+        bank = { bankName: "OPay", accountName: "Cavalli Wears", accountNumber: "7045960867" };
+        localStorage.setItem("cavalli_store_bank", JSON.stringify(bank));
+      }
+
+      // Update Stats
+      const totalRev = orders.reduce((sum, o) => sum + (o.totalAmount || 0), 0);
+      const pendingTrans = orders.filter(o => o.status && o.status.includes("Pending")).length;
+
+      document.getElementById("statTotalOrders").textContent = orders.length;
+      document.getElementById("statTotalRevenue").textContent = formatNaira(totalRev);
+      document.getElementById("statTotalProducts").textContent = prods.length;
+      document.getElementById("statPendingTransfers").textContent = pendingTrans;
+      document.getElementById("tabOrderCount").textContent = orders.length;
+      document.getElementById("catalogCount").textContent = prods.length;
+      document.getElementById("tabCustomerCount").textContent = users.length;
+
+      // Populate Bank Form
+      document.getElementById("bankName").value = bank.bankName;
+      document.getElementById("accountName").value = bank.accountName;
+      document.getElementById("accountNumber").value = bank.accountNumber;
+
+      // Render Orders, Products & Customers
+      renderOrdersList(orders);
+      renderProductCards(prods);
+      renderCustomersList(users, orders);
+    }
+
+    function renderCustomersList(users, orders = []) {
+      const container = document.getElementById("adminCustomersContainer");
+      const emptyMsg = document.getElementById("adminNoCustomers");
+
+      if (users.length === 0) {
+        container.innerHTML = "";
+        emptyMsg.classList.remove("hidden");
+        return;
+      }
+
+      emptyMsg.classList.add("hidden");
+      container.innerHTML = users.map(u => {
+        const userOrders = orders.filter(o => o.customer && (o.customer.email === u.email || o.userId === u.id));
+        return `
+          <div class="bg-white rounded-2xl p-5 border border-stone-200/90 shadow-xs space-y-3">
+            <div class="flex items-center justify-between border-b border-stone-100 pb-2.5">
+              <div class="flex items-center gap-2.5">
+                <div class="w-8 h-8 rounded-lg bg-amber-500 text-stone-950 font-bold flex items-center justify-center text-sm">
+                  ${u.name.charAt(0).toUpperCase()}
+                </div>
+                <div>
+                  <h4 class="text-sm font-bold text-stone-900">${u.name}</h4>
+                  <span class="text-[10px] text-stone-400">Joined: ${u.registeredAt || 'Recently'}</span>
+                </div>
+              </div>
+              <span class="text-xs bg-amber-50 text-amber-800 font-bold px-2 py-0.5 rounded-full border border-amber-200">
+                ${userOrders.length} Order${userOrders.length !== 1 ? 's' : ''}
+              </span>
+            </div>
+            <div class="text-xs space-y-1 text-stone-600 bg-stone-50 p-3 rounded-xl border border-stone-100">
+              <div><strong class="text-stone-800">Email:</strong> ${u.email}</div>
+              <div><strong class="text-stone-800">Phone:</strong> ${u.phone}</div>
+              <div><strong class="text-stone-800">Address:</strong> ${u.address}</div>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Render Orders
+    function renderOrdersList(orders) {
+      const container = document.getElementById("adminOrdersContainer");
+      const emptyMsg = document.getElementById("adminNoOrders");
+
+      if (orders.length === 0) {
+        container.innerHTML = "";
+        emptyMsg.classList.remove("hidden");
+        return;
+      }
+
+      emptyMsg.classList.add("hidden");
+      container.innerHTML = orders.map((o, idx) => `
+        <div class="bg-white rounded-3xl p-6 border border-stone-200/90 shadow-xs space-y-4">
+          <div class="flex flex-wrap items-center justify-between gap-3 border-b border-stone-100 pb-3">
+            <div>
+              <span class="font-mono font-bold text-stone-900 text-sm">#${o.orderId}</span>
+              <span class="text-xs text-stone-400 ml-2">${o.date}</span>
+            </div>
+            <div class="flex items-center gap-2">
+              <select 
+                onchange="updateOrderStatus('${o.orderId}', this.value)" 
+                class="text-xs font-bold px-3 py-1.5 rounded-xl border border-stone-200 bg-stone-50 text-stone-800 focus:outline-none"
+              >
+                <option value="Pending Bank Verification" ${o.status === 'Pending Bank Verification' ? 'selected' : ''}>⏳ Pending Verification</option>
+                <option value="Payment Confirmed" ${o.status === 'Payment Confirmed' ? 'selected' : ''}>✅ Payment Confirmed</option>
+                <option value="Dispatched / En Route" ${o.status === 'Dispatched / En Route' ? 'selected' : ''}>🚚 Dispatched / En Route</option>
+                <option value="Delivered" ${o.status === 'Delivered' ? 'selected' : ''}>🎉 Delivered</option>
+              </select>
+              <span class="text-base font-black text-amber-700">${formatNaira(o.totalAmount)}</span>
+            </div>
+          </div>
+
+          <!-- Customer details -->
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs bg-stone-50 p-4 rounded-2xl border border-stone-100">
+            <div>
+              <span class="text-stone-400 block font-semibold">Customer Name</span>
+              <strong class="text-stone-900">${o.customer.name}</strong>
+            </div>
+            <div>
+              <span class="text-stone-400 block font-semibold">Phone / WhatsApp</span>
+              <strong class="text-stone-900">${o.customer.phone}</strong>
+            </div>
+            <div>
+              <span class="text-stone-400 block font-semibold">Payment Option</span>
+              <strong class="text-stone-900">${o.paymentMethod}</strong>
+            </div>
+            <div class="sm:col-span-3">
+              <span class="text-stone-400 block font-semibold">Delivery Address</span>
+              <strong class="text-stone-900">${o.customer.address}</strong>
+            </div>
+
+            ${o.bankTransferDetails ? `
+              <div class="sm:col-span-3 bg-amber-50/80 p-3 rounded-xl border border-amber-200 text-amber-950 mt-1">
+                <span class="font-bold block mb-1">🏦 Nigerian Bank Transfer Submission:</span>
+                <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-[11px]">
+                  <div><strong>Customer Bank:</strong> ${o.bankTransferDetails.customerBank}</div>
+                  <div><strong>Sender Name:</strong> ${o.bankTransferDetails.senderName}</div>
+                  <div><strong>Cavalli Bank Paid To:</strong> ${o.bankTransferDetails.storeBankPaidTo}</div>
+                  ${o.bankTransferDetails.transferRef ? `<div><strong>Narration:</strong> ${o.bankTransferDetails.transferRef}</div>` : ''}
+                </div>
+              </div>
+            ` : ''}
+          </div>
+
+          <!-- Items list -->
+          <div class="text-xs space-y-1.5">
+            <span class="text-stone-400 block font-semibold">Items Ordered:</span>
+            ${o.items.map(it => `
+              <div class="flex items-center justify-between text-stone-700 pl-2">
+                <span>${it.quantity}x ${it.title}</span>
+                <span class="font-semibold">${formatNaira(it.price * it.quantity)}</span>
+              </div>
+            `).join('')}
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function updateOrderStatus(orderId, newStatus) {
+      let orders = JSON.parse(localStorage.getItem("cavalli_orders") || "[]");
+      const target = orders.find(o => o.orderId === orderId);
+      if (target) {
+        target.status = newStatus;
+        localStorage.setItem("cavalli_orders", JSON.stringify(orders));
+        showAdminToast(`Order #${orderId} marked as ${newStatus}`);
+        loadAdminData();
+      }
+    }
+
+    function clearAllOrders() {
+      if (confirm("Are you sure you want to delete all customer order history?")) {
+        localStorage.setItem("cavalli_orders", "[]");
+        loadAdminData();
+        showAdminToast("Order history cleared");
+      }
+    }
+
+    // Render Products
+    function renderProductCards(prods) {
+      const container = document.getElementById("adminProductList");
+      container.innerHTML = prods.map(p => `
+        <div class="bg-white rounded-2xl border border-stone-200 overflow-hidden flex flex-col justify-between shadow-xs">
+          <div>
+            <div class="h-48 bg-stone-100 overflow-hidden relative">
+              <img src="${p.image}" alt="${p.title}" class="w-full h-full object-cover object-top" onerror="this.src='https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&auto=format&fit=crop&q=80'" />
+              ${p.badge ? `<span class="absolute top-2 left-2 bg-stone-950 text-amber-300 text-[10px] font-bold px-2 py-0.5 rounded-full">${p.badge}</span>` : ''}
+            </div>
+            <div class="p-4 space-y-1">
+              <span class="text-[10px] font-bold text-amber-700 uppercase">${p.category}</span>
+              <h4 class="text-sm font-bold text-stone-900 line-clamp-1">${p.title}</h4>
+              <p class="text-xs text-stone-500 line-clamp-2">${p.description}</p>
+            </div>
+          </div>
+          <div class="p-4 pt-0 border-t border-stone-100 mt-2 flex items-center justify-between">
+            <span class="text-base font-black text-stone-900">${formatNaira(p.price)}</span>
+            <button 
+              onclick="handleDeleteProduct(${p.id})" 
+              class="text-xs text-red-500 hover:text-red-700 font-bold px-2.5 py-1.5 rounded-lg border border-red-200 hover:bg-red-50 transition"
+            >
+              <i class="fa-solid fa-trash-can mr-1"></i> Delete
+            </button>
+          </div>
+        </div>
+      `).join('');
+    }
+
+    function handleAdminCreateProduct(e) {
+      e.preventDefault();
+      const title = document.getElementById("pTitle").value.trim();
+      const category = document.getElementById("pCategory").value;
+      const price = parseFloat(document.getElementById("pPrice").value);
+      const image = document.getElementById("pImage").value.trim();
+      const badge = document.getElementById("pBadge").value.trim();
+      const rating = parseFloat(document.getElementById("pRating").value) || 5.0;
+      const description = document.getElementById("pDescription").value.trim();
+
+      const newProd = {
+        id: Date.now(),
+        title,
+        category,
+        price,
+        rating,
+        badge,
+        image,
+        description
+      };
+
+      let prods = JSON.parse(localStorage.getItem("cavalli_products") || "[]");
+      prods.unshift(newProd);
+      localStorage.setItem("cavalli_products", JSON.stringify(prods));
+
+      document.getElementById("pTitle").value = "";
+      document.getElementById("pPrice").value = "";
+      document.getElementById("pImage").value = "";
+      document.getElementById("pBadge").value = "";
+      document.getElementById("pDescription").value = "";
+
+      showAdminToast(`"${title}" published to live store!`);
+      loadAdminData();
+    }
+
+    function handleDeleteProduct(id) {
+      if (confirm("Remove this product from the customer website?")) {
+        let prods = JSON.parse(localStorage.getItem("cavalli_products") || "[]");
+        prods = prods.filter(p => p.id !== id);
+        localStorage.setItem("cavalli_products", JSON.stringify(prods));
+        showAdminToast("Product deleted from store");
+        loadAdminData();
+      }
+    }
+
+    function handleAdminSaveBank(e) {
+      e.preventDefault();
+      const bank = {
+        bankName: document.getElementById("bankName").value.trim(),
+        accountName: document.getElementById("accountName").value.trim(),
+        accountNumber: document.getElementById("accountNumber").value.trim()
+      };
+      localStorage.setItem("cavalli_store_bank", JSON.stringify(bank));
+      showAdminToast("Store Bank Account updated successfully!");
+    }
+
+    function handleChangePassword(e) {
+      e.preventDefault();
+      const curr = document.getElementById("currPass").value.trim();
+      const newP = document.getElementById("newPass").value.trim();
+      const stored = localStorage.getItem("cavalli_admin_password") || DEFAULT_ADMIN_PASS;
+
+      if (curr !== stored) {
+        alert("Current password is incorrect.");
+        return;
+      }
+
+      localStorage.setItem("cavalli_admin_password", newP);
+      document.getElementById("currPass").value = "";
+      document.getElementById("newPass").value = "";
+      showAdminToast("Owner Password updated successfully!");
+    }
+
+    function switchTab(tab) {
+      const tabs = ['orders', 'products', 'customers', 'bank', 'security'];
+      tabs.forEach(t => {
+        const btn = document.getElementById(`tabBtn${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        const content = document.getElementById(`tabContent${t.charAt(0).toUpperCase() + t.slice(1)}`);
+        if (t === tab) {
+          btn.className = "pb-3 border-b-2 border-stone-950 text-stone-950 flex items-center gap-2 font-bold";
+          content.classList.remove("hidden");
+        } else {
+          btn.className = "pb-3 border-b-2 border-transparent text-stone-400 hover:text-stone-700 flex items-center gap-2";
+          content.classList.add("hidden");
+        }
+      });
+    }
+
+    function showAdminToast(msg) {
+      const toast = document.getElementById("adminToast");
+      document.getElementById("adminToastMsg").textContent = msg;
+      toast.classList.remove("translate-y-24", "opacity-0");
+      toast.classList.add("translate-y-0", "opacity-100");
+      setTimeout(() => {
+        toast.classList.remove("translate-y-0", "opacity-100");
+        toast.classList.add("translate-y-24", "opacity-0");
+      }, 2500);
+    }
+  </script>
+</body>
+</html>
+

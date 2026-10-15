@@ -1,0 +1,1872 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Search Collection | Cavalli Wears Nigeria</title>
+  
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Inter & Playfair Display -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;0,900;1,600&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            serif: ['Playfair Display', 'serif'],
+          },
+          colors: {
+            amber: {
+              450: '#F59E0B',
+            }
+          }
+        }
+      }
+    }
+  </script>
+
+  <style>
+    .glassmorphism {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+    }
+    .custom-scrollbar::-webkit-scrollbar {
+      width: 6px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-track {
+      background: #f1f1f1;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb {
+      background: #c5a059;
+      border-radius: 9999px;
+    }
+    .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+      background: #a37f3a;
+    }
+    @keyframes pulse-subtle {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.85; }
+    }
+    .animate-subtle {
+      animation: pulse-subtle 3s infinite ease-in-out;
+    }
+  </style>
+</head>
+<body class="bg-stone-50 text-stone-900 font-sans antialiased min-h-screen flex flex-col custom-scrollbar">
+
+  <!-- ================= TOP ANNOUNCEMENT BANNER ================= -->
+  <div class="bg-stone-950 text-amber-300 text-xs py-2 px-4 text-center font-medium tracking-wide flex items-center justify-between sm:justify-center gap-2">
+    <span>✨ Cavalli Wears Search & Discovery: Instant Search & Nigerian Bank Transfer</span>
+    <span class="mx-2 hidden sm:inline">•</span>
+    <a href="index.html" class="text-white underline hover:text-amber-300 transition text-xs font-semibold flex items-center gap-1">
+      <i class="fa-solid fa-arrow-left text-[10px]"></i>
+      <span>Back to Store</span>
+    </a>
+  </div>
+
+  <!-- ================= HEADER NAVBAR ================= -->
+  <header class="sticky top-0 z-40 glassmorphism border-b border-stone-200/80 shadow-xs">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-20 flex items-center justify-between gap-4">
+      
+      <!-- Brand Logo -->
+      <a href="index.html" class="flex items-center gap-3 group">
+        <div class="w-10 h-10 rounded-xl bg-gradient-to-br from-amber-600 via-stone-900 to-black flex items-center justify-center text-amber-400 shadow-md group-hover:scale-105 transition-transform">
+          <i class="fa-solid fa-crown text-base"></i>
+        </div>
+        <div>
+          <span class="text-xl sm:text-2xl font-black tracking-tight text-stone-950 font-serif flex items-center gap-1.5">
+            Cavalli <span class="text-amber-600 font-sans text-lg font-extrabold uppercase tracking-widest">Wears</span>
+          </span>
+          <p class="text-[9px] text-stone-500 font-semibold tracking-widest uppercase -mt-1">Collection Search</p>
+        </div>
+      </a>
+
+      <!-- Quick Back to Store Button -->
+      <div class="hidden sm:flex items-center">
+        <a 
+          href="index.html" 
+          class="inline-flex items-center gap-2 bg-stone-100 hover:bg-stone-200 text-stone-800 px-4 py-2 rounded-xl text-xs font-bold transition border border-stone-200 hover:border-stone-300"
+        >
+          <i class="fa-solid fa-arrow-left text-amber-600"></i>
+          <span>Back to Main Store</span>
+        </a>
+      </div>
+
+      <!-- Actions: User Authentication & Shopping Cart -->
+      <div class="flex items-center gap-2.5 sm:gap-3">
+        
+        <!-- User Account Container -->
+        <div id="userNavContainer" class="flex items-center">
+          <!-- Injected via JS -->
+        </div>
+
+        <!-- Shopping Cart Button -->
+        <button 
+          onclick="toggleCartDrawer(true)" 
+          class="relative inline-flex items-center gap-2 bg-stone-950 hover:bg-stone-850 text-white px-3.5 sm:px-4 py-2.5 rounded-xl font-semibold text-sm shadow-md transition active:scale-95"
+        >
+          <i class="fa-solid fa-cart-shopping text-base text-amber-400"></i>
+          <span class="font-bold hidden sm:inline">Cart</span>
+          <span id="cartCountBadge" class="bg-amber-500 text-stone-950 font-black text-xs px-2 py-0.5 rounded-full shadow-sm">0</span>
+        </button>
+
+      </div>
+
+    </div>
+  </header>
+
+  <!-- ================= SEARCH CONTROL HEADER (TOP OF PAGE) ================= -->
+  <section class="bg-stone-900 text-white pt-8 pb-10 border-b border-stone-800 relative overflow-hidden">
+    <!-- Subtle glow background -->
+    <div class="absolute inset-0 bg-[radial-gradient(circle_at_50%_20%,rgba(217,119,6,0.18),transparent_65%)] pointer-events-none"></div>
+
+    <div class="max-w-5xl mx-auto px-4 sm:px-6 relative z-10 space-y-6">
+      
+      <!-- Header Titles -->
+      <div class="text-center space-y-1.5">
+        <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-amber-500/10 border border-amber-500/30 text-amber-400 text-[11px] font-bold uppercase tracking-widest">
+          <i class="fa-solid fa-magnifying-glass text-xs"></i>
+          Direct Search & Product Finder
+        </div>
+        <h1 class="text-3xl sm:text-4xl font-extrabold font-serif text-white tracking-tight">
+          Find Your Desired <span class="text-transparent bg-clip-text bg-gradient-to-r from-amber-300 via-amber-400 to-yellow-500">Cavalli Wears</span>
+        </h1>
+        <p class="text-xs sm:text-sm text-stone-300 max-w-lg mx-auto font-light">
+          Search luxury suits, silk shirts, designer footwear, streetwear & native wears with instant results below.
+        </p>
+      </div>
+
+      <!-- Main Prominent Search Input Box -->
+      <div class="max-w-3xl mx-auto">
+        <div class="relative flex items-center shadow-2xl rounded-2xl bg-white p-1.5 border-2 border-amber-500/80 focus-within:ring-4 focus-within:ring-amber-500/30 transition">
+          <i class="fa-solid fa-magnifying-glass text-amber-600 text-lg ml-4"></i>
+          <input 
+            type="text" 
+            id="pageSearchInput"
+            autofocus
+            placeholder="Type any wear, color, or style (e.g. Italian suit, silk shirt, loafers, velvet, watch, polo)..." 
+            class="w-full bg-transparent text-stone-900 text-sm sm:text-base px-3.5 py-2.5 focus:outline-none placeholder:text-stone-400"
+          />
+          
+          <!-- Clear Button (hidden when empty) -->
+          <button 
+            id="clearSearchBtn" 
+            onclick="clearSearch()"
+            class="hidden text-stone-400 hover:text-stone-700 px-2 py-1 text-sm rounded-full transition"
+            title="Clear search"
+          >
+            <i class="fa-solid fa-circle-xmark text-lg"></i>
+          </button>
+
+          <!-- Search / Action Button -->
+          <button 
+            onclick="triggerSearch()"
+            class="bg-amber-500 hover:bg-amber-400 text-stone-950 font-extrabold text-sm px-5 sm:px-6 py-2.5 sm:py-3 rounded-xl shadow-md transition flex items-center gap-2 active:scale-95 shrink-0"
+          >
+            <span>Search</span>
+            <i class="fa-solid fa-arrow-right text-xs"></i>
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Search Suggestions / Trending Tags -->
+      <div class="flex flex-wrap items-center justify-center gap-2 pt-1 text-xs text-stone-300">
+        <span class="text-stone-400 text-[11px] font-semibold uppercase tracking-wider flex items-center gap-1">
+          <i class="fa-solid fa-bolt text-amber-400"></i> Popular:
+        </span>
+        <button onclick="applyKeyword('Suit')" class="px-3 py-1 rounded-full bg-stone-800/90 hover:bg-amber-500 hover:text-stone-950 text-stone-200 border border-stone-700 transition">👑 Suits</button>
+        <button onclick="applyKeyword('Silk')" class="px-3 py-1 rounded-full bg-stone-800/90 hover:bg-amber-500 hover:text-stone-950 text-stone-200 border border-stone-700 transition">👔 Silk Shirts</button>
+        <button onclick="applyKeyword('Loafers')" class="px-3 py-1 rounded-full bg-stone-800/90 hover:bg-amber-500 hover:text-stone-950 text-stone-200 border border-stone-700 transition">👞 Loafers</button>
+        <button onclick="applyKeyword('Velvet')" class="px-3 py-1 rounded-full bg-stone-800/90 hover:bg-amber-500 hover:text-stone-950 text-stone-200 border border-stone-700 transition">✨ Velvet</button>
+        <button onclick="applyKeyword('Watch')" class="px-3 py-1 rounded-full bg-stone-800/90 hover:bg-amber-500 hover:text-stone-950 text-stone-200 border border-stone-700 transition">⌚ Luxury Watch</button>
+        <button onclick="applyKeyword('Boots')" class="px-3 py-1 rounded-full bg-stone-800/90 hover:bg-amber-500 hover:text-stone-950 text-stone-200 border border-stone-700 transition">👢 Chelsea Boots</button>
+        <button onclick="applyKeyword('Senator')" class="px-3 py-1 rounded-full bg-stone-800/90 hover:bg-amber-500 hover:text-stone-950 text-stone-200 border border-stone-700 transition">🪙 Native Senator</button>
+        <button onclick="applyKeyword('Hoodie')" class="px-3 py-1 rounded-full bg-stone-800/90 hover:bg-amber-500 hover:text-stone-950 text-stone-200 border border-stone-700 transition">🔥 Gold Hoodie</button>
+        <button onclick="applyKeyword('Cap')" class="px-3 py-1 rounded-full bg-stone-800/90 hover:bg-amber-500 hover:text-stone-950 text-stone-200 border border-stone-700 transition">🧢 Designer Caps</button>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- ================= SEARCH RESULTS & FILTER SECTION ================= -->
+  <main class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    
+    <!-- Filter Tabs & Sort Controls -->
+    <div class="flex flex-col lg:flex-row lg:items-center justify-between gap-4 pb-6 border-b border-stone-200">
+      
+      <!-- Category Tabs -->
+      <div class="flex flex-wrap items-center gap-1.5 sm:gap-2" id="searchCategoryContainer">
+        <!-- Rendered via JS -->
+      </div>
+
+      <!-- Sorting Selector -->
+      <div class="flex items-center gap-2 self-end lg:self-auto">
+        <label for="searchSortSelect" class="text-xs text-stone-500 font-semibold uppercase tracking-wider shrink-0">Sort By:</label>
+        <select 
+          id="searchSortSelect" 
+          class="bg-white border border-stone-200 text-xs font-semibold text-stone-800 rounded-xl px-3 py-2 focus:outline-none focus:ring-2 focus:ring-amber-500 shadow-2xs"
+        >
+          <option value="featured">Featured Collection</option>
+          <option value="price-low">Price: Low to High (₦)</option>
+          <option value="price-high">Price: High to Low (₦)</option>
+          <option value="name">Alphabetical (A - Z)</option>
+          <option value="rating">Highest Customer Rating</option>
+        </select>
+      </div>
+
+    </div>
+
+    <!-- Live Results Status Bar -->
+    <div class="flex items-center justify-between py-4 text-xs">
+      <div class="flex items-center gap-2">
+        <span id="resultsSummaryText" class="font-bold text-stone-800 text-sm">
+          Showing wears
+        </span>
+        <span id="activeSearchBadge" class="hidden inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-amber-100 text-amber-900 font-semibold text-xs border border-amber-200">
+          <span id="activeSearchQueryLabel"></span>
+          <button onclick="clearSearch()" class="hover:text-amber-700 font-bold ml-1">×</button>
+        </span>
+      </div>
+      <a href="index.html" class="text-stone-500 hover:text-stone-900 transition underline text-xs font-medium">
+        Browse Full Catalog on Home
+      </a>
+    </div>
+
+    <!-- Product Grid: Displayed immediately without scrolling! -->
+    <div id="searchProductGrid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+      <!-- Product cards injected via JS -->
+    </div>
+
+    <!-- Empty Search State -->
+    <div id="searchEmptyState" class="hidden text-center py-16 px-4 bg-white rounded-3xl border border-stone-200/80 shadow-xs max-w-xl mx-auto my-6 space-y-4">
+      <div class="w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center mx-auto text-2xl">
+        <i class="fa-solid fa-magnifying-glass"></i>
+      </div>
+      <h3 class="text-xl font-bold font-serif text-stone-900">No matching wears found</h3>
+      <p class="text-xs sm:text-sm text-stone-500 max-w-sm mx-auto leading-relaxed">
+        We couldn't find any wear matching your search. Try checking your spelling or use general keywords like <strong class="text-stone-800">suit, shirt, shoes, watch</strong>.
+      </p>
+      <div class="pt-2 flex flex-wrap justify-center gap-3">
+        <button 
+          onclick="resetAllSearchFilters()" 
+          class="bg-stone-950 hover:bg-stone-850 text-amber-400 font-bold text-xs px-5 py-2.5 rounded-xl transition shadow-sm"
+        >
+          View All 12 Cavalli Wears
+        </button>
+        <a 
+          href="index.html" 
+          class="bg-stone-100 hover:bg-stone-200 text-stone-800 font-bold text-xs px-5 py-2.5 rounded-xl transition border border-stone-200"
+        >
+          Return to Store Home
+        </a>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ================= FOOTER ================= -->
+  <footer class="bg-stone-950 text-stone-400 text-xs py-10 border-t border-stone-800 mt-auto">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col sm:flex-row items-center justify-between gap-6">
+      <div class="flex items-center gap-3">
+        <div class="w-8 h-8 rounded-lg bg-amber-500 flex items-center justify-center text-stone-950 font-black">
+          <i class="fa-solid fa-crown text-sm"></i>
+        </div>
+        <div>
+          <span class="text-white font-serif font-bold text-sm">Cavalli Wears Nigeria</span>
+          <p class="text-[10px] text-stone-500">Premium Bespoke Fashion & Footwear</p>
+        </div>
+      </div>
+      <div class="flex items-center gap-6 text-stone-400">
+        <a href="index.html" class="hover:text-amber-400 transition">Storefront</a>
+        <a href="index.html#ordering-guide" class="hover:text-amber-400 transition">OPay Payment Info</a>
+      </div>
+      <p class="text-[11px] text-stone-500">© 2026 Cavalli Wears. All rights reserved.</p>
+    </div>
+  </footer>
+
+  <!-- ================= CART SLIDE-OVER DRAWER ================= -->
+  <div id="cartDrawerBackdrop" class="fixed inset-0 bg-stone-950/60 backdrop-blur-xs z-50 hidden transition-opacity duration-300" onclick="toggleCartDrawer(false)"></div>
+  <div id="cartDrawer" class="fixed top-0 right-0 bottom-0 w-full max-w-md bg-white shadow-2xl z-50 transform translate-x-full transition-transform duration-300 flex flex-col">
+    <!-- Header -->
+    <div class="p-5 border-b border-stone-200 flex items-center justify-between bg-stone-950 text-white">
+      <div class="flex items-center gap-2.5">
+        <i class="fa-solid fa-cart-shopping text-amber-400 text-lg"></i>
+        <h2 class="font-serif font-bold text-lg">Your Cavalli Cart</h2>
+        <span id="drawerCartCount" class="bg-amber-500 text-stone-950 text-xs font-black px-2 py-0.5 rounded-full">0</span>
+      </div>
+      <button onclick="toggleCartDrawer(false)" class="text-stone-400 hover:text-white p-1 rounded-lg transition">
+        <i class="fa-solid fa-xmark text-lg"></i>
+      </button>
+    </div>
+
+    <!-- Free Delivery Progress Tracker -->
+    <div class="bg-amber-50/70 border-b border-amber-200/60 p-3.5 text-xs">
+      <div class="flex justify-between items-center mb-1.5 font-medium text-stone-800">
+        <span id="deliveryProgressText">Free Express Delivery on orders over ₦120,000</span>
+        <span id="deliveryRemainingText" class="font-bold text-amber-700">₦120,000 to go</span>
+      </div>
+      <div class="w-full bg-stone-200 h-2 rounded-full overflow-hidden">
+        <div id="deliveryProgressBar" class="bg-amber-500 h-full rounded-full transition-all duration-300" style="width: 0%"></div>
+      </div>
+    </div>
+
+    <!-- Cart Item List -->
+    <div id="cartItemsContainer" class="flex-1 overflow-y-auto p-5 space-y-4 custom-scrollbar">
+      <!-- Items dynamically populated -->
+    </div>
+
+    <!-- Empty Cart Notification -->
+    <div id="emptyCartView" class="hidden flex-1 flex flex-col items-center justify-center p-8 text-center text-stone-400 space-y-3">
+      <div class="w-16 h-16 rounded-full bg-stone-100 flex items-center justify-center text-stone-300 text-2xl">
+        <i class="fa-solid fa-cart-shopping"></i>
+      </div>
+      <p class="font-serif font-bold text-stone-800 text-lg">Your Cart is Empty</p>
+      <p class="text-xs text-stone-500 max-w-xs">Search our collection or select an item above to add to your order.</p>
+    </div>
+
+    <!-- Footer Summary & Checkout Action -->
+    <div class="p-5 border-t border-stone-200 bg-stone-50 space-y-3">
+      <div class="space-y-1.5 text-xs text-stone-600">
+        <div class="flex justify-between">
+          <span>Subtotal</span>
+          <span id="cartSubtotal" class="font-bold text-stone-900 text-sm">₦0</span>
+        </div>
+        <div class="flex justify-between">
+          <span>Nationwide Dispatch Fee</span>
+          <span id="cartShippingFee" class="text-stone-900 font-semibold">Calculated at Checkout</span>
+        </div>
+        <div class="flex justify-between border-t border-stone-200/80 pt-2 text-stone-950 font-black text-base">
+          <span>Total Amount</span>
+          <span id="cartGrandTotal" class="text-amber-600 font-serif">₦0</span>
+        </div>
+      </div>
+
+      <button 
+        id="btnProceedCheckout"
+        onclick="initiateCheckoutProcess()"
+        class="w-full bg-stone-950 hover:bg-stone-850 text-amber-400 font-bold py-3.5 px-4 rounded-xl shadow-lg transition flex items-center justify-center gap-2 active:scale-98 disabled:opacity-50 disabled:cursor-not-allowed"
+      >
+        <i class="fa-solid fa-lock text-xs"></i>
+        <span>Proceed to Checkout</span>
+        <i class="fa-solid fa-arrow-right text-xs"></i>
+      </button>
+
+      <p class="text-[11px] text-center text-stone-500 flex items-center justify-center gap-1">
+        <i class="fa-solid fa-shield-halved text-amber-600"></i>
+        <span>Direct OPay Bank Transfer Verified</span>
+      </p>
+    </div>
+  </div>
+
+  <!-- ================= CHECKOUT MODAL ================= -->
+  <div id="checkoutModal" class="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4 overflow-y-auto">
+    <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 shadow-2xl space-y-6 my-8 border border-stone-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      
+      <div class="flex items-center justify-between border-b border-stone-200 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500 text-stone-950 flex items-center justify-center font-bold">
+            <i class="fa-solid fa-bag-shopping"></i>
+          </div>
+          <div>
+            <h3 class="font-serif font-bold text-xl text-stone-950">Complete Your Order</h3>
+            <p class="text-xs text-stone-500">Pay via Instant Nigerian Bank Transfer (OPay)</p>
+          </div>
+        </div>
+        <button onclick="closeCheckoutModal()" class="text-stone-400 hover:text-stone-700 p-1 rounded-lg">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Current Logged In Account Banner -->
+      <div id="checkoutAuthNotice" class="bg-amber-50 border border-amber-200 rounded-2xl p-3.5 text-xs flex items-center justify-between">
+        <div class="flex items-center gap-2.5">
+          <i class="fa-solid fa-circle-check text-amber-600 text-base"></i>
+          <div>
+            <p class="font-bold text-stone-900">Logged in as: <span id="checkoutUserDisplay" class="text-amber-800"></span></p>
+            <p class="text-[11px] text-stone-500">Your order will be linked to your account.</p>
+          </div>
+        </div>
+        <button onclick="openCustomerProfileModal()" class="text-stone-700 hover:text-stone-950 font-bold underline text-[11px]">View Profile</button>
+      </div>
+
+      <!-- Bank Transfer Details Card -->
+      <div class="bg-stone-950 text-white rounded-2xl p-5 border border-stone-800 space-y-3">
+        <div class="flex items-center justify-between">
+          <span class="text-xs font-bold text-amber-400 uppercase tracking-widest flex items-center gap-1.5">
+            <i class="fa-solid fa-building-columns"></i>
+            Store Payment Account
+          </span>
+          <span class="text-[10px] bg-stone-800 text-stone-300 px-2 py-0.5 rounded-full">Official Account</span>
+        </div>
+
+        <div class="grid grid-cols-2 gap-4 pt-1">
+          <div>
+            <p class="text-[10px] text-stone-400 uppercase font-semibold">Bank Name</p>
+            <p id="searchDisplayStoreBankName" class="text-base font-black text-amber-400">OPay</p>
+          </div>
+          <div>
+            <p class="text-[10px] text-stone-400 uppercase font-semibold">Account Number</p>
+            <div class="flex items-center gap-2">
+              <span id="searchDisplayStoreAccountNumber" class="text-base font-black font-mono tracking-wider text-white">7045960867</span>
+              <button onclick="copyToClipboard('7045960867')" title="Copy Account Number" class="text-xs bg-stone-800 hover:bg-amber-500 hover:text-stone-950 text-amber-400 px-2 py-1 rounded transition">
+                <i class="fa-regular fa-copy"></i>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <div class="pt-1 border-t border-stone-800/80 flex items-center justify-between text-xs">
+          <div>
+            <span class="text-[10px] text-stone-400 uppercase font-semibold block">Account Name</span>
+            <span id="searchDisplayStoreAccountName" class="font-bold text-stone-200">Cavalli Wears</span>
+          </div>
+          <span class="text-[10px] text-amber-400/90 italic">Instant Transfer Confirmation</span>
+        </div>
+      </div>
+
+      <!-- Checkout Form -->
+      <form id="checkoutForm" onsubmit="handleCheckoutSubmit(event)" class="space-y-4 text-xs">
+        
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Select Bank You Are Transferring From *</label>
+          <div class="space-y-2">
+            <input 
+              type="text" 
+              id="bankSearchFilterInput" 
+              oninput="populateBanksList(this.value)"
+              placeholder="🔍 Search your bank (GTBank, Zenith, Access, Kuda, PalmPay, Moniepoint...)" 
+              class="w-full border border-stone-200 rounded-xl px-3 py-2 text-xs focus:ring-2 focus:ring-amber-500 bg-stone-50"
+            />
+            <select 
+              id="customerBankSelect" 
+              required 
+              class="w-full border border-stone-300 rounded-xl px-3 py-2.5 text-xs focus:ring-2 focus:ring-amber-500 bg-white"
+            >
+              <!-- Populated via JS -->
+            </select>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">Full Name *</label>
+            <input type="text" id="custFullName" required placeholder="e.g. Chukwuma Adeleke" class="w-full border border-stone-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500">
+          </div>
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">WhatsApp / Phone Number *</label>
+            <input type="tel" id="custPhone" required placeholder="e.g. 08012345678" class="w-full border border-stone-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500">
+          </div>
+        </div>
+
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Email Address *</label>
+          <input type="email" id="custEmail" required placeholder="e.g. client@example.com" class="w-full border border-stone-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500">
+        </div>
+
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Delivery Address (Street, Area, Landmark) *</label>
+          <textarea id="custAddress" required rows="2" placeholder="e.g. Suite 4B, Admiralty Way, Lekki Phase 1, Lagos" class="w-full border border-stone-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500"></textarea>
+        </div>
+
+        <div class="grid grid-cols-2 gap-3">
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">State *</label>
+            <select id="custState" required class="w-full border border-stone-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500 bg-white">
+              <option value="Lagos">Lagos</option>
+              <option value="Abuja FCT">Abuja FCT</option>
+              <option value="Rivers (Port Harcourt)">Rivers (Port Harcourt)</option>
+              <option value="Oyo (Ibadan)">Oyo (Ibadan)</option>
+              <option value="Delta">Delta</option>
+              <option value="Edo (Benin)">Edo (Benin)</option>
+              <option value="Kano">Kano</option>
+              <option value="Enugu">Enugu</option>
+              <option value="Anambra">Anambra</option>
+              <option value="Ogun">Ogun</option>
+              <option value="Other States">Other Nigerian States</option>
+            </select>
+          </div>
+          <div>
+            <label class="block font-semibold text-stone-700 mb-1">Delivery Speed</label>
+            <select id="custDeliverySpeed" class="w-full border border-stone-300 rounded-xl px-3 py-2 focus:ring-2 focus:ring-amber-500 bg-white">
+              <option value="Express">Express (24 - 48 Hours)</option>
+              <option value="Standard">Standard (3 - 5 Days)</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Order Summary Recap -->
+        <div class="bg-stone-50 rounded-2xl p-3.5 border border-stone-200/80 space-y-2">
+          <div class="flex justify-between font-bold text-stone-900 text-xs">
+            <span>Total Amount to Transfer:</span>
+            <span id="modalCheckoutTotal" class="text-amber-700 font-serif text-sm">₦0</span>
+          </div>
+          <p class="text-[11px] text-stone-500">
+            Please transfer the exact total to <strong class="text-stone-800">OPay 7045960867 (Cavalli Wears)</strong>. After clicking confirm, your order is submitted and our dispatch concierge will contact you immediately.
+          </p>
+        </div>
+
+        <div class="flex gap-3 pt-2">
+          <button type="button" onclick="closeCheckoutModal()" class="w-1/3 bg-stone-200 hover:bg-stone-300 text-stone-800 font-semibold py-3 rounded-xl transition">
+            Cancel
+          </button>
+          <button type="submit" class="w-2/3 bg-amber-500 hover:bg-amber-400 text-stone-950 font-extrabold py-3 rounded-xl shadow-lg transition flex items-center justify-center gap-2">
+            <i class="fa-solid fa-check-circle"></i>
+            <span>Confirm & Place Order</span>
+          </button>
+        </div>
+
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ================= AUTH MODAL (LOGIN / SIGN UP) ================= -->
+  <div id="authModal" class="fixed inset-0 z-50 bg-stone-950/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl space-y-6 border border-stone-100">
+      
+      <div class="flex items-center justify-between border-b border-stone-200 pb-4">
+        <div>
+          <h3 id="authModalTitle" class="font-serif font-bold text-xl text-stone-950">Customer Account</h3>
+          <p class="text-xs text-stone-500">Sign in or create an account to order</p>
+        </div>
+        <button onclick="closeAuthModal()" class="text-stone-400 hover:text-stone-700 p-1 rounded-lg">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <!-- Auth Tabs -->
+      <div class="flex rounded-xl bg-stone-100 p-1 text-xs font-bold">
+        <button id="authTabLogin" onclick="switchAuthTab('login')" class="flex-1 py-2 rounded-lg bg-white shadow-xs text-stone-950 transition">
+          Sign In
+        </button>
+        <button id="authTabSignup" onclick="switchAuthTab('signup')" class="flex-1 py-2 rounded-lg text-stone-500 hover:text-stone-950 transition">
+          Create Account
+        </button>
+      </div>
+
+      <!-- Login Form -->
+      <form id="loginForm" onsubmit="handleLoginSubmit(event)" class="space-y-4 text-xs">
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Email Address</label>
+          <input type="email" id="loginEmail" required placeholder="you@example.com" class="w-full border border-stone-300 rounded-xl px-3.5 py-2.5 focus:ring-2 focus:ring-amber-500">
+        </div>
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Password</label>
+          <input type="password" id="loginPassword" required placeholder="••••••••" class="w-full border border-stone-300 rounded-xl px-3.5 py-2.5 focus:ring-2 focus:ring-amber-500">
+        </div>
+        <button type="submit" class="w-full bg-stone-950 hover:bg-stone-850 text-amber-400 font-bold py-3 rounded-xl shadow-md transition">
+          Sign In to Cavalli Account
+        </button>
+      </form>
+
+      <!-- Signup Form -->
+      <form id="signupForm" onsubmit="handleSignupSubmit(event)" class="space-y-3.5 text-xs hidden">
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Full Name *</label>
+          <input type="text" id="signupName" required placeholder="e.g. Chukwuma Adeleke" class="w-full border border-stone-300 rounded-xl px-3.5 py-2 focus:ring-2 focus:ring-amber-500">
+        </div>
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Email Address *</label>
+          <input type="email" id="signupEmail" required placeholder="you@example.com" class="w-full border border-stone-300 rounded-xl px-3.5 py-2 focus:ring-2 focus:ring-amber-500">
+        </div>
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">WhatsApp / Phone Number *</label>
+          <input type="tel" id="signupPhone" required placeholder="08012345678" class="w-full border border-stone-300 rounded-xl px-3.5 py-2 focus:ring-2 focus:ring-amber-500">
+        </div>
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Delivery Address *</label>
+          <input type="text" id="signupAddress" required placeholder="Lekki Phase 1, Lagos" class="w-full border border-stone-300 rounded-xl px-3.5 py-2 focus:ring-2 focus:ring-amber-500">
+        </div>
+        <div>
+          <label class="block font-semibold text-stone-700 mb-1">Create Password *</label>
+          <input type="password" id="signupPassword" required minlength="4" placeholder="At least 4 characters" class="w-full border border-stone-300 rounded-xl px-3.5 py-2 focus:ring-2 focus:ring-amber-500">
+        </div>
+        <button type="submit" class="w-full bg-amber-500 hover:bg-amber-400 text-stone-950 font-extrabold py-3 rounded-xl shadow-md transition">
+          Create Account & Proceed
+        </button>
+      </form>
+
+    </div>
+  </div>
+
+  <!-- ================= CUSTOMER PROFILE & ORDER HISTORY MODAL ================= -->
+  <div id="customerProfileModal" class="fixed inset-0 z-50 bg-stone-950/75 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-lg w-full p-6 sm:p-8 shadow-2xl space-y-6 border border-stone-100 max-h-[90vh] overflow-y-auto custom-scrollbar">
+      
+      <div class="flex items-center justify-between border-b border-stone-200 pb-4">
+        <div class="flex items-center gap-3">
+          <div class="w-12 h-12 rounded-full bg-amber-500 text-stone-950 font-bold flex items-center justify-center text-lg">
+            <span id="custAvatarLetter">C</span>
+          </div>
+          <div>
+            <h3 id="custProfileName" class="font-serif font-bold text-xl text-stone-950">Customer</h3>
+            <p id="custProfileEmail" class="text-xs text-stone-500">customer@example.com</p>
+          </div>
+        </div>
+        <button onclick="closeCustomerProfileModal()" class="text-stone-400 hover:text-stone-700 p-1 rounded-lg">
+          <i class="fa-solid fa-xmark text-lg"></i>
+        </button>
+      </div>
+
+      <div class="bg-stone-50 rounded-2xl p-4 border border-stone-200/80 space-y-2 text-xs">
+        <div class="flex justify-between">
+          <span class="text-stone-500">Phone:</span>
+          <span id="custProfilePhone" class="font-semibold text-stone-900">-</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-stone-500">Default Delivery Address:</span>
+          <span id="custProfileAddress" class="font-semibold text-stone-900 text-right max-w-xs">-</span>
+        </div>
+      </div>
+
+      <div>
+        <h4 class="font-bold text-stone-900 text-xs uppercase tracking-wider mb-3 flex items-center justify-between">
+          <span>My Order History</span>
+          <span id="custMyOrdersCount" class="bg-amber-100 text-amber-900 px-2 py-0.5 rounded-full text-[11px] font-bold">0</span>
+        </h4>
+        <div id="custMyOrdersContainer" class="space-y-3 max-h-56 overflow-y-auto custom-scrollbar">
+          <!-- Injected via JS -->
+        </div>
+        <div id="custNoOrders" class="text-center py-6 text-stone-400 text-xs">
+          No orders placed yet.
+        </div>
+      </div>
+
+      <div class="pt-2 border-t border-stone-200 flex items-center justify-between">
+        <button onclick="handleLogout()" class="text-red-600 hover:text-red-800 text-xs font-bold flex items-center gap-1.5">
+          <i class="fa-solid fa-arrow-right-from-bracket"></i>
+          <span>Sign Out</span>
+        </button>
+        <button onclick="closeCustomerProfileModal()" class="bg-stone-900 hover:bg-stone-800 text-white text-xs font-semibold px-4 py-2 rounded-xl transition">
+          Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ================= QUICK VIEW PRODUCT MODAL ================= -->
+  <div id="quickViewModal" class="fixed inset-0 z-50 bg-stone-950/70 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative border border-stone-100 flex flex-col md:flex-row">
+      <button onclick="closeQuickViewModal()" class="absolute top-4 right-4 z-10 bg-white/90 hover:bg-white text-stone-700 w-8 h-8 rounded-full flex items-center justify-center shadow transition">
+        <i class="fa-solid fa-xmark"></i>
+      </button>
+
+      <div class="md:w-1/2 h-64 md:h-auto bg-stone-100 relative">
+        <img id="qvImage" src="" alt="" class="w-full h-full object-cover object-top">
+        <span id="qvBadge" class="absolute top-3 left-3 bg-stone-950 text-amber-300 text-[10px] font-bold px-2.5 py-1 rounded-full uppercase tracking-wider"></span>
+      </div>
+
+      <div class="md:w-1/2 p-6 flex flex-col justify-between space-y-4">
+        <div class="space-y-2">
+          <div class="flex items-center justify-between text-xs">
+            <span id="qvCategory" class="text-amber-700 font-bold uppercase tracking-wider text-[11px]"></span>
+            <div class="flex items-center text-amber-500 gap-1 text-xs">
+              <i class="fa-solid fa-star"></i>
+              <span id="qvRating" class="text-stone-700 font-bold">5.0</span>
+            </div>
+          </div>
+          <h3 id="qvTitle" class="text-xl font-serif font-bold text-stone-950 leading-snug"></h3>
+          <p id="qvDescription" class="text-xs text-stone-500 leading-relaxed"></p>
+          <div class="pt-2">
+            <span class="text-xs text-stone-400 block uppercase font-semibold">Price in Nigerian Naira</span>
+            <span id="qvPrice" class="text-2xl font-black text-amber-600"></span>
+          </div>
+        </div>
+
+        <div class="space-y-3 pt-3 border-t border-stone-100">
+          <div class="flex items-center gap-3">
+            <span class="text-xs text-stone-600 font-semibold">Qty:</span>
+            <div class="flex items-center border border-stone-300 rounded-xl overflow-hidden text-xs">
+              <button onclick="changeQvQty(-1)" class="px-3 py-1.5 bg-stone-100 hover:bg-stone-200 font-bold">-</button>
+              <span id="qvQtyDisplay" class="px-4 py-1.5 font-bold">1</span>
+              <button onclick="changeQvQty(1)" class="px-3 py-1.5 bg-stone-100 hover:bg-stone-200 font-bold">+</button>
+            </div>
+          </div>
+          <button 
+            id="qvAddToCartBtn"
+            class="w-full bg-amber-500 hover:bg-amber-400 text-stone-950 font-extrabold py-3 rounded-xl shadow-md transition flex items-center justify-center gap-2"
+          >
+            <i class="fa-solid fa-cart-shopping"></i>
+            <span>Add to Cart</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= ORDER SUCCESS MODAL ================= -->
+  <div id="orderSuccessModal" class="fixed inset-0 z-50 bg-stone-950/80 backdrop-blur-sm hidden flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 shadow-2xl text-center space-y-5 border border-stone-100">
+      <div class="w-16 h-16 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center mx-auto text-2xl animate-bounce">
+        <i class="fa-solid fa-check"></i>
+      </div>
+      <div>
+        <h3 class="font-serif font-bold text-2xl text-stone-950">Order Placed Successfully!</h3>
+        <p class="text-xs text-stone-500 mt-1">Thank you for shopping with Cavalli Wears Nigeria</p>
+      </div>
+
+      <div class="bg-stone-50 rounded-2xl p-4 border border-stone-200 text-xs space-y-2 text-left">
+        <div class="flex justify-between">
+          <span class="text-stone-500">Order ID:</span>
+          <span id="successOrderId" class="font-mono font-bold text-stone-900">#CW-0000</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-stone-500">Total Amount:</span>
+          <span id="successOrderTotal" class="font-bold text-amber-700">₦0</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-stone-500">Payment Channel:</span>
+          <span class="font-semibold text-stone-800">OPay Direct Bank Transfer</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-stone-500">Account:</span>
+          <span class="font-mono font-bold text-stone-800">7045960867 (OPay)</span>
+        </div>
+      </div>
+
+      <div class="text-xs text-stone-500 leading-relaxed">
+        Our customer support concierge will contact your phone or WhatsApp shortly to confirm payment receipt and dispatch your package.
+      </div>
+
+      <div class="pt-2 flex gap-3">
+        <button onclick="closeOrderSuccessModal()" class="w-full bg-stone-950 hover:bg-stone-850 text-amber-400 font-bold py-3 rounded-xl transition">
+          Continue Shopping
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ================= FLOATING TOAST NOTIFICATION ================= -->
+  <div id="toastNotification" class="fixed bottom-6 right-6 z-50 bg-stone-950 text-white px-5 py-3 rounded-2xl shadow-xl flex items-center gap-3 transform translate-y-24 opacity-0 transition-all duration-300 pointer-events-none text-xs font-medium border border-stone-800">
+    <i id="toastIcon" class="fa-solid fa-circle-check text-amber-400 text-base"></i>
+    <span id="toastMessage">Action completed!</span>
+  </div>
+
+  <!-- ================= JAVASCRIPT LOGIC ================= -->
+  <script>
+    // -------------------------------------------------------------
+    // NIGERIAN BANKS DATABASE
+    // -------------------------------------------------------------
+    const NIGERIAN_BANKS = [
+      { name: "Access Bank", code: "044", category: "Commercial" },
+      { name: "Guaranty Trust Bank (GTBank / GTCO)", code: "058", category: "Commercial" },
+      { name: "Zenith Bank", code: "057", category: "Commercial" },
+      { name: "United Bank for Africa (UBA)", code: "033", category: "Commercial" },
+      { name: "First Bank of Nigeria", code: "011", category: "Commercial" },
+      { name: "Fidelity Bank", code: "070", category: "Commercial" },
+      { name: "Stanbic IBTC Bank", code: "221", category: "Commercial" },
+      { name: "First City Monument Bank (FCMB)", code: "214", category: "Commercial" },
+      { name: "Sterling Bank", code: "232", category: "Commercial" },
+      { name: "Wema Bank / ALAT", code: "035", category: "Commercial" },
+      { name: "Union Bank of Nigeria", code: "032", category: "Commercial" },
+      { name: "Polaris Bank", code: "076", category: "Commercial" },
+      { name: "Keystone Bank", code: "082", category: "Commercial" },
+      { name: "Ecobank Nigeria", code: "050", category: "Commercial" },
+      { name: "Providus Bank", code: "101", category: "Commercial" },
+      { name: "Unity Bank", code: "215", category: "Commercial" },
+      { name: "Jaiz Bank", code: "301", category: "Commercial" },
+      { name: "Taj Bank", code: "302", category: "Commercial" },
+      { name: "Lotus Bank", code: "303", category: "Commercial" },
+      { name: "Standard Chartered Bank", code: "068", category: "Commercial" },
+      { name: "Citibank Nigeria", code: "023", category: "Commercial" },
+      { name: "Titan Trust Bank", code: "102", category: "Commercial" },
+      { name: "Premium Trust Bank", code: "105", category: "Commercial" },
+      { name: "Signature Bank", code: "106", category: "Commercial" },
+      { name: "Optimus Bank", code: "107", category: "Commercial" },
+      { name: "OPay (PayCom)", code: "999992", category: "Fintech / Microfinance" },
+      { name: "PalmPay", code: "999991", category: "Fintech / Microfinance" },
+      { name: "Moniepoint Microfinance Bank", code: "50515", category: "Fintech / Microfinance" },
+      { name: "Kuda Microfinance Bank", code: "50211", category: "Fintech / Microfinance" },
+      { name: "FairMoney Microfinance Bank", code: "51318", category: "Fintech / Microfinance" },
+      { name: "Carbon (One Finance)", code: "100026", category: "Fintech / Microfinance" },
+      { name: "VFD Microfinance Bank (VBank)", code: "566", category: "Fintech / Microfinance" },
+      { name: "Rubies Bank", code: "125", category: "Fintech / Microfinance" },
+      { name: "Raven Bank", code: "50394", category: "Fintech / Microfinance" },
+      { name: "Gomoney", code: "100022", category: "Fintech / Microfinance" },
+      { name: "Dot Microfinance Bank", code: "50604", category: "Fintech / Microfinance" },
+      { name: "Sparkle Microfinance Bank", code: "51310", category: "Fintech / Microfinance" }
+    ];
+
+    // -------------------------------------------------------------
+    // DEFAULT PRODUCTS (SYNCHRONIZED WITH INDEX.HTML)
+    // -------------------------------------------------------------
+    const DEFAULT_PRODUCTS = [
+      {
+        id: 1,
+        title: "Cavalli Tailored Italian Double-Breasted Suit",
+        category: "Suits & Blazers",
+        price: 145000,
+        rating: 5.0,
+        badge: "Cavalli Signature",
+        image: "https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&auto=format&fit=crop&q=80",
+        description: "Pure Italian virgin wool in midnight black with handcrafted peak lapels, tailored for galas, red carpet events, and weddings."
+      },
+      {
+        id: 2,
+        title: "Cavalli Monogram Silk Button-Down Shirt",
+        category: "Shirts & Tops",
+        price: 42000,
+        rating: 4.9,
+        badge: "Trending",
+        image: "https://images.unsplash.com/photo-1602810318383-e386cc2a3ccf?w=800&auto=format&fit=crop&q=80",
+        description: "100% breathable Mulberry silk with bespoke mother-of-pearl buttons. Unrivaled comfort and luxury feel for day or night."
+      },
+      {
+        id: 3,
+        title: "Cavalli Handcrafted Italian Leather Loafers",
+        category: "Footwear & Shoes",
+        price: 68000,
+        rating: 4.9,
+        badge: "Best Seller",
+        image: "https://images.unsplash.com/photo-1614252235316-8c857d38b5f4?w=800&auto=format&fit=crop&q=80",
+        description: "Genuine top-grain calfskin leather with gold-tone horsebit detailing and non-slip durable Goodyear welted soles."
+      },
+      {
+        id: 4,
+        title: "Cavalli Streetwear Heavyweight Gold Hoodie",
+        category: "Streetwear",
+        price: 38000,
+        rating: 4.8,
+        badge: "New Drop",
+        image: "https://images.unsplash.com/photo-1556905055-8f358a7a47b2?w=800&auto=format&fit=crop&q=80",
+        description: "460 GSM combed cotton French terry with embroidered Cavalli metallic gold chest emblem and double-layer hood."
+      },
+      {
+        id: 5,
+        title: "Cavalli Suede Chelsea Boots in Tan",
+        category: "Footwear & Shoes",
+        price: 75000,
+        rating: 4.9,
+        badge: "Popular",
+        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?w=800&auto=format&fit=crop&q=80",
+        description: "Premium water-resistant split suede with elasticated side gussets and cushioned leather insoles for all-day comfort."
+      },
+      {
+        id: 6,
+        title: "Cavalli Tailored Pleated Trousers (Olive)",
+        category: "Suits & Blazers",
+        price: 32000,
+        rating: 4.7,
+        badge: "Featured",
+        image: "https://images.unsplash.com/photo-1624378439575-d8705ad7ae80?w=800&auto=format&fit=crop&q=80",
+        description: "Modern high-rise tailored trousers with sharp front pleats and side adjustable buckle waistbands."
+      },
+      {
+        id: 7,
+        title: "Cavalli Royal Gold Aviator Sunglasses",
+        category: "Luxury Accessories",
+        price: 25000,
+        rating: 4.8,
+        badge: "Luxury",
+        image: "https://images.unsplash.com/photo-1511499767150-a48a237f0083?w=800&auto=format&fit=crop&q=80",
+        description: "24K gold-plated stainless steel frame with polarized UV400 gradient lenses and embossed Cavalli logo on temple."
+      },
+      {
+        id: 8,
+        title: "Cavalli Chronograph Chrono Luxury Watch",
+        category: "Luxury Accessories",
+        price: 95000,
+        rating: 5.0,
+        badge: "Exclusive",
+        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?w=800&auto=format&fit=crop&q=80",
+        description: "Scratch-resistant sapphire crystal glass, Japanese quartz chronograph mechanism, with genuine crocodile-embossed leather strap."
+      },
+      {
+        id: 9,
+        title: "Cavalli Velvet Tuxedo Dinner Jacket (Burgundy)",
+        category: "Suits & Blazers",
+        price: 125000,
+        rating: 4.9,
+        badge: "Luxury",
+        image: "https://images.unsplash.com/photo-1507679799987-c73779587ccf?w=800&auto=format&fit=crop&q=80",
+        description: "Rich Burgundy Italian velvet featuring black silk shawl lapels and engraved Cavalli gold buttons for red carpet appearances."
+      },
+      {
+        id: 10,
+        title: "Cavalli Senator Native Wear with Gold Embroidery",
+        category: "Traditional & Native",
+        price: 48000,
+        rating: 4.9,
+        badge: "Bespoke",
+        image: "https://images.unsplash.com/photo-1534030347209-467a5b0ad3e6?w=800&auto=format&fit=crop&q=80",
+        description: "Pure cashmere-blend Senator suit with handcrafted gold chest embroidery, tailored matching trousers, and clean neck finish."
+      },
+      {
+        id: 11,
+        title: "Cavalli Luxury Reversible Leather Belt",
+        category: "Luxury Accessories",
+        price: 28000,
+        rating: 4.7,
+        badge: "",
+        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?w=800&auto=format&fit=crop&q=80",
+        description: "Full-grain reversible Italian leather (Black/Cognac Brown) with polished gold monogram buckle."
+      },
+      {
+        id: 12,
+        title: "Cavalli Classic Pique Cotton Polo Shirt",
+        category: "Shirts & Tops",
+        price: 24000,
+        rating: 4.8,
+        badge: "Essential",
+        image: "https://images.unsplash.com/photo-1581655353564-df123a1eb820?w=800&auto=format&fit=crop&q=80",
+        description: "Premium mercerized breathable pique cotton with rib-knit collar and discreet embroidered crown emblem."
+      },
+      {
+        id: 13,
+        title: "Nike Air Club Athletic Curved-Brim Cap",
+        category: "Designer Caps & Hats",
+        price: 8000,
+        rating: 4.9,
+        badge: "New Arrival",
+        image: "images/caps/nike-air-club-cap.png",
+        description: "Official Nike Air Club Cap featuring a crisp white crown, royal blue curved visor, perforated dark grey breathable side panels, and stitched Nike Air patch."
+      },
+      {
+        id: 14,
+        title: "Streetwear Vintage Distressed FIRE Flames Cap",
+        category: "Designer Caps & Hats",
+        price: 8000,
+        rating: 4.8,
+        badge: "Trending Drop",
+        image: "images/caps/streetwear-fire-flames-cap.png",
+        description: "Black vintage washed cotton cap with raw distressed brim edge, crossed electric guitars graphic, 3D embroidered red gothic FIRE emblem, and pink flame accents."
+      },
+      {
+        id: 15,
+        title: "Nike Classic 99 Retro Court Tennis Cap",
+        category: "Designer Caps & Hats",
+        price: 8000,
+        rating: 4.9,
+        badge: "Popular",
+        image: "images/caps/nike-classic-court-cap.png",
+        description: "Structured Nike Classic 99 cap in rich olive khaki with multicolor vintage court tennis emblem, embroidered white Swoosh, and customizable metal buckle strap."
+      },
+      {
+        id: 16,
+        title: "Gothic Camouflage 'Chase After' Embroidered Cap",
+        category: "Designer Caps & Hats",
+        price: 8000,
+        rating: 4.8,
+        badge: "Exclusive",
+        image: "images/caps/camo-chase-after-cap.png",
+        description: "Heavyweight military camo cotton cap featuring pastel pink embroidered gothic crosses, arched 'CHASE AFTER' text, and cursive brim embroidery."
+      },
+      {
+        id: 17,
+        title: "DSQ Brothers 95 Embroidered Trucker Mesh Cap",
+        category: "Designer Caps & Hats",
+        price: 8000,
+        rating: 4.9,
+        badge: "Best Seller",
+        image: "images/caps/dsq-brothers-trucker-cap.png",
+        description: "Black unstructured trucker cap with cooling rear mesh, adjustable snapback, and bold DSQ 64 BROTHERS 95 stitched patch with Canadian red maple leaf."
+      }
+    ];
+
+    const DEFAULT_STORE_BANK = {
+      bankName: "OPay",
+      accountName: "Cavalli Wears",
+      accountNumber: "7045960867"
+    };
+
+    // -------------------------------------------------------------
+    // STATE MANAGEMENT
+    // -------------------------------------------------------------
+    let products = [];
+    let cart = [];
+    let orders = [];
+    let currentUser = null;
+    let pendingCheckoutAfterAuth = false;
+    let storeBank = DEFAULT_STORE_BANK;
+    let activeCategory = "All";
+    let searchQuery = "";
+    let sortMode = "featured";
+    let currentQvProduct = null;
+    let currentQvQty = 1;
+
+    function formatNaira(amount) {
+      const num = Number(amount) || 0;
+      return "₦" + num.toLocaleString('en-NG', { maximumFractionDigits: 0 });
+    }
+
+    // -------------------------------------------------------------
+    // INIT SEARCH PAGE
+    // -------------------------------------------------------------
+    function initSearchPage() {
+      // Load products
+      const storedProds = localStorage.getItem("cavalli_products");
+      if (storedProds) {
+        try {
+          products = JSON.parse(storedProds);
+          if (!Array.isArray(products) || products.length === 0) {
+            products = DEFAULT_PRODUCTS;
+            localStorage.setItem("cavalli_products", JSON.stringify(products));
+          } else {
+            // Auto-merge newly added default products
+            let updated = false;
+            DEFAULT_PRODUCTS.forEach(dp => {
+              if (!products.some(p => p.id === dp.id)) {
+                products.push(dp);
+                updated = true;
+              }
+            });
+            if (updated) {
+              localStorage.setItem("cavalli_products", JSON.stringify(products));
+            }
+          }
+        } catch (e) {
+          products = DEFAULT_PRODUCTS;
+        }
+      } else {
+        products = DEFAULT_PRODUCTS;
+        localStorage.setItem("cavalli_products", JSON.stringify(products));
+      }
+
+      // Load cart
+      const storedCart = localStorage.getItem("cavalli_cart");
+      if (storedCart) {
+        try { cart = JSON.parse(storedCart); } catch (e) { cart = []; }
+      }
+
+      // Load orders
+      const storedOrders = localStorage.getItem("cavalli_orders");
+      if (storedOrders) {
+        try { orders = JSON.parse(storedOrders); } catch (e) { orders = []; }
+      }
+
+      // Load user
+      const storedUser = localStorage.getItem("cavalli_current_user");
+      if (storedUser) {
+        try { currentUser = JSON.parse(storedUser); } catch (e) { currentUser = null; }
+      }
+
+      // Bank info
+      const storedBank = localStorage.getItem("cavalli_store_bank");
+      if (storedBank) {
+        try { storeBank = JSON.parse(storedBank); } catch (e) { storeBank = DEFAULT_STORE_BANK; }
+      }
+
+      // Parse Query String (e.g. search.html?q=suit)
+      const urlParams = new URLSearchParams(window.location.search);
+      const queryParam = urlParams.get("q") || "";
+      if (queryParam) {
+        searchQuery = queryParam.trim();
+        const input = document.getElementById("pageSearchInput");
+        if (input) input.value = searchQuery;
+      }
+
+      updateAuthNavUI();
+      populateBanksList();
+      renderCategoryTabs();
+      renderSearchResults();
+      updateCartUI();
+      setupEventListeners();
+
+      // Auto-focus search input with cursor at end, just like Temu
+      setTimeout(() => {
+        const input = document.getElementById("pageSearchInput");
+        if (input) {
+          input.focus();
+          const len = input.value.length;
+          input.setSelectionRange(len, len);
+        }
+      }, 60);
+    }
+
+    // -------------------------------------------------------------
+    // SEARCH & FILTER LOGIC
+    // -------------------------------------------------------------
+    function setupEventListeners() {
+      const input = document.getElementById("pageSearchInput");
+      const clearBtn = document.getElementById("clearSearchBtn");
+
+      if (input) {
+        input.addEventListener("input", (e) => {
+          searchQuery = e.target.value;
+          if (searchQuery.trim().length > 0) {
+            clearBtn.classList.remove("hidden");
+          } else {
+            clearBtn.classList.add("hidden");
+          }
+          // Update URL in place
+          updateSearchUrl(searchQuery);
+          renderSearchResults();
+        });
+
+        input.addEventListener("keydown", (e) => {
+          if (e.key === "Enter") {
+            e.preventDefault();
+            triggerSearch();
+          }
+        });
+
+        if (searchQuery.trim().length > 0) {
+          clearBtn.classList.remove("hidden");
+        }
+      }
+
+      const sortSel = document.getElementById("searchSortSelect");
+      if (sortSel) {
+        sortSel.addEventListener("change", (e) => {
+          sortMode = e.target.value;
+          renderSearchResults();
+        });
+      }
+
+      window.addEventListener("keydown", (e) => {
+        if (e.key === "Escape") {
+          toggleCartDrawer(false);
+          closeCheckoutModal();
+          closeQuickViewModal();
+          closeOrderSuccessModal();
+          closeAuthModal();
+          closeCustomerProfileModal();
+        }
+      });
+    }
+
+    function updateSearchUrl(q) {
+      const url = new URL(window.location.href);
+      if (q && q.trim().length > 0) {
+        url.searchParams.set("q", q.trim());
+      } else {
+        url.searchParams.delete("q");
+      }
+      window.history.replaceState({}, "", url.toString());
+    }
+
+    function triggerSearch() {
+      const input = document.getElementById("pageSearchInput");
+      if (input) {
+        searchQuery = input.value.trim();
+        updateSearchUrl(searchQuery);
+        renderSearchResults();
+        showToast(`Searching for "${searchQuery || 'All'}"`);
+      }
+    }
+
+    function applyKeyword(word) {
+      const input = document.getElementById("pageSearchInput");
+      if (input) {
+        input.value = word;
+        searchQuery = word;
+        document.getElementById("clearSearchBtn").classList.remove("hidden");
+        updateSearchUrl(word);
+        renderSearchResults();
+        showToast(`Filtered by "${word}"`);
+      }
+    }
+
+    function clearSearch() {
+      const input = document.getElementById("pageSearchInput");
+      if (input) {
+        input.value = "";
+        searchQuery = "";
+        document.getElementById("clearSearchBtn").classList.add("hidden");
+        updateSearchUrl("");
+        renderSearchResults();
+        input.focus();
+      }
+    }
+
+    function resetAllSearchFilters() {
+      activeCategory = "All";
+      clearSearch();
+      renderCategoryTabs();
+    }
+
+    function renderCategoryTabs() {
+      const container = document.getElementById("searchCategoryContainer");
+      if (!container) return;
+
+      const categories = ["All", "Suits & Blazers", "Shirts & Tops", "Designer Caps & Hats", "Footwear & Shoes", "Streetwear", "Luxury Accessories", "Traditional & Native"];
+
+      container.innerHTML = categories.map(cat => {
+        const isActive = activeCategory === cat;
+        return `
+          <button 
+            onclick="setCategory('${cat}')" 
+            class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all ${
+              isActive 
+                ? "bg-amber-500 text-stone-950 shadow-sm shadow-amber-500/20" 
+                : "bg-stone-100 hover:bg-stone-200 text-stone-700"
+            }"
+          >
+            ${cat}
+          </button>
+        `;
+      }).join('');
+    }
+
+    function setCategory(cat) {
+      activeCategory = cat;
+      renderCategoryTabs();
+      renderSearchResults();
+    }
+
+    // -------------------------------------------------------------
+    // RENDER SEARCH RESULTS
+    // -------------------------------------------------------------
+    function renderSearchResults() {
+      const grid = document.getElementById("searchProductGrid");
+      const empty = document.getElementById("searchEmptyState");
+      const summaryText = document.getElementById("resultsSummaryText");
+      const activeBadge = document.getElementById("activeSearchBadge");
+      const activeQueryLabel = document.getElementById("activeSearchQueryLabel");
+
+      const q = searchQuery.toLowerCase().trim();
+
+      let filtered = products.filter(item => {
+        const matchesCat = activeCategory === "All" || item.category === activeCategory;
+        const matchesQuery = !q || 
+          item.title.toLowerCase().includes(q) ||
+          item.description.toLowerCase().includes(q) ||
+          item.category.toLowerCase().includes(q) ||
+          (item.badge && item.badge.toLowerCase().includes(q));
+        return matchesCat && matchesQuery;
+      });
+
+      // Sorting
+      if (sortMode === "price-low") {
+        filtered.sort((a, b) => a.price - b.price);
+      } else if (sortMode === "price-high") {
+        filtered.sort((a, b) => b.price - a.price);
+      } else if (sortMode === "name") {
+        filtered.sort((a, b) => a.title.localeCompare(b.title));
+      } else if (sortMode === "rating") {
+        filtered.sort((a, b) => (b.rating || 5) - (a.rating || 5));
+      }
+
+      // Summary label
+      if (q) {
+        summaryText.innerHTML = `Found <strong class="text-amber-700">${filtered.length} wear${filtered.length === 1 ? '' : 's'}</strong> for:`;
+        activeBadge.classList.remove("hidden");
+        activeQueryLabel.textContent = `"${q}"`;
+      } else {
+        summaryText.innerHTML = `Showing <strong class="text-stone-950">${filtered.length}</strong> wears ${activeCategory !== 'All' ? 'in ' + activeCategory : 'in collection'}`;
+        activeBadge.classList.add("hidden");
+      }
+
+      if (filtered.length === 0) {
+        grid.innerHTML = "";
+        empty.classList.remove("hidden");
+        return;
+      }
+
+      empty.classList.add("hidden");
+
+      grid.innerHTML = filtered.map(product => {
+        const badgeHtml = product.badge 
+          ? `<span class="absolute top-3 left-3 bg-stone-950/90 text-amber-300 font-bold text-[10px] tracking-wider uppercase px-2.5 py-1 rounded-full backdrop-blur-sm shadow">${product.badge}</span>` 
+          : "";
+
+        return `
+          <div class="group bg-white rounded-2xl border border-stone-200/90 overflow-hidden shadow-xs hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div>
+              <!-- Product Image -->
+              <div class="relative h-60 bg-stone-100 overflow-hidden cursor-pointer" onclick="openQuickView(${product.id})">
+                <img 
+                  src="${product.image}" 
+                  alt="${product.title}" 
+                  loading="lazy" 
+                  class="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  onerror="this.src='https://images.unsplash.com/photo-1594938298603-c8148c4dae35?w=800&auto=format&fit=crop&q=80'"
+                />
+                ${badgeHtml}
+                <!-- Quick View Button -->
+                <button 
+                  onclick="event.stopPropagation(); openQuickView(${product.id})"
+                  class="absolute bottom-3 right-3 bg-white/95 hover:bg-white text-stone-800 w-9 h-9 rounded-full flex items-center justify-center shadow opacity-0 group-hover:opacity-100 transition-all duration-200"
+                  title="Quick View"
+                >
+                  <i class="fa-regular fa-eye text-xs"></i>
+                </button>
+              </div>
+
+              <!-- Details -->
+              <div class="p-5">
+                <div class="flex items-center justify-between text-xs mb-1.5">
+                  <span class="text-amber-700 font-bold uppercase tracking-wider text-[10px]">${product.category}</span>
+                  <div class="flex items-center text-amber-500 gap-1 text-[11px]">
+                    <i class="fa-solid fa-star"></i>
+                    <span class="text-stone-700 font-bold">${product.rating || 5.0}</span>
+                  </div>
+                </div>
+
+                <h3 
+                  onclick="openQuickView(${product.id})" 
+                  class="font-bold text-stone-900 text-base leading-snug group-hover:text-amber-700 transition cursor-pointer line-clamp-1"
+                  title="${product.title}"
+                >
+                  ${product.title}
+                </h3>
+                <p class="text-xs text-stone-500 mt-1 line-clamp-2 leading-relaxed">
+                  ${product.description}
+                </p>
+              </div>
+            </div>
+
+            <!-- Price & Add Action in Naira -->
+            <div class="p-5 pt-0 border-t border-stone-100 mt-2 flex items-center justify-between">
+              <div>
+                <span class="text-[10px] text-stone-400 block font-semibold uppercase tracking-wider">Price</span>
+                <span class="text-lg font-black text-stone-950">${formatNaira(product.price)}</span>
+              </div>
+              <button 
+                onclick="quickAddToCart(${product.id})" 
+                class="inline-flex items-center gap-2 bg-stone-100 hover:bg-stone-950 text-stone-900 hover:text-amber-300 font-bold text-xs px-4 py-2.5 rounded-xl transition duration-200 shadow-xs active:scale-95"
+              >
+                <i class="fa-solid fa-cart-shopping"></i>
+                <span>Add to Cart</span>
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // -------------------------------------------------------------
+    // CART OPERATIONS
+    // -------------------------------------------------------------
+    function toggleCartDrawer(show) {
+      const drawer = document.getElementById("cartDrawer");
+      const backdrop = document.getElementById("cartDrawerBackdrop");
+      if (show) {
+        backdrop.classList.remove("hidden");
+        setTimeout(() => drawer.classList.remove("translate-x-full"), 10);
+      } else {
+        drawer.classList.add("translate-x-full");
+        setTimeout(() => backdrop.classList.add("hidden"), 300);
+      }
+    }
+
+    function saveCart() {
+      localStorage.setItem("cavalli_cart", JSON.stringify(cart));
+    }
+
+    function quickAddToCart(productId) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod) return;
+
+      const existing = cart.find(item => item.id === productId);
+      if (existing) {
+        existing.quantity += 1;
+      } else {
+        cart.push({
+          id: prod.id,
+          title: prod.title,
+          price: prod.price,
+          category: prod.category,
+          image: prod.image,
+          quantity: 1
+        });
+      }
+
+      saveCart();
+      updateCartUI();
+      showToast(`Added "${prod.title}" to Cart`);
+    }
+
+    function updateCartQty(productId, delta) {
+      const item = cart.find(i => i.id === productId);
+      if (!item) return;
+
+      item.quantity += delta;
+      if (item.quantity <= 0) {
+        cart = cart.filter(i => i.id !== productId);
+      }
+
+      saveCart();
+      updateCartUI();
+    }
+
+    function removeCartItem(productId) {
+      cart = cart.filter(i => i.id !== productId);
+      saveCart();
+      updateCartUI();
+      showToast("Item removed from cart");
+    }
+
+    function updateCartUI() {
+      const totalItems = cart.reduce((acc, item) => acc + item.quantity, 0);
+      const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+
+      // Badges
+      const badge = document.getElementById("cartCountBadge");
+      const drawerCount = document.getElementById("drawerCartCount");
+      if (badge) badge.textContent = totalItems;
+      if (drawerCount) drawerCount.textContent = totalItems;
+
+      // Totals
+      document.getElementById("cartSubtotal").textContent = formatNaira(subtotal);
+      document.getElementById("cartGrandTotal").textContent = formatNaira(subtotal);
+
+      // Free shipping threshold (₦120,000)
+      const threshold = 120000;
+      const progressPercent = Math.min(100, (subtotal / threshold) * 100);
+      const bar = document.getElementById("deliveryProgressBar");
+      const remainingLabel = document.getElementById("deliveryRemainingText");
+
+      if (bar) bar.style.width = `${progressPercent}%`;
+
+      if (remainingLabel) {
+        if (subtotal >= threshold) {
+          remainingLabel.textContent = "Eligible for FREE Express Delivery! 🎉";
+          remainingLabel.className = "font-bold text-emerald-700";
+        } else {
+          const diff = threshold - subtotal;
+          remainingLabel.textContent = `${formatNaira(diff)} to go`;
+          remainingLabel.className = "font-bold text-amber-700";
+        }
+      }
+
+      // Render cart item list
+      const container = document.getElementById("cartItemsContainer");
+      const emptyView = document.getElementById("emptyCartView");
+      const checkoutBtn = document.getElementById("btnProceedCheckout");
+
+      if (cart.length === 0) {
+        container.innerHTML = "";
+        emptyView.classList.remove("hidden");
+        checkoutBtn.disabled = true;
+      } else {
+        emptyView.classList.add("hidden");
+        checkoutBtn.disabled = false;
+        container.innerHTML = cart.map(item => `
+          <div class="flex items-center gap-3.5 bg-stone-50 border border-stone-200/90 rounded-2xl p-3">
+            <img src="${item.image}" alt="${item.title}" class="w-16 h-16 rounded-xl object-cover object-top border border-stone-200">
+            <div class="flex-1 min-w-0">
+              <h4 class="font-bold text-stone-900 text-xs truncate">${item.title}</h4>
+              <p class="text-amber-700 font-extrabold text-xs mt-0.5">${formatNaira(item.price)}</p>
+              
+              <div class="flex items-center gap-2 mt-2">
+                <div class="flex items-center border border-stone-300 rounded-lg bg-white text-xs">
+                  <button onclick="updateCartQty(${item.id}, -1)" class="px-2 py-0.5 hover:bg-stone-100 font-bold">-</button>
+                  <span class="px-2 py-0.5 font-bold">${item.quantity}</span>
+                  <button onclick="updateCartQty(${item.id}, 1)" class="px-2 py-0.5 hover:bg-stone-100 font-bold">+</button>
+                </div>
+                <button onclick="removeCartItem(${item.id})" class="text-stone-400 hover:text-red-600 text-xs ml-auto transition">
+                  <i class="fa-solid fa-trash-can"></i>
+                </button>
+              </div>
+            </div>
+          </div>
+        `).join('');
+      }
+    }
+
+    // -------------------------------------------------------------
+    // CHECKOUT PROCESS & AUTH REQUIREMENT
+    // -------------------------------------------------------------
+    function initiateCheckoutProcess() {
+      if (cart.length === 0) {
+        showToast("Your cart is empty!");
+        return;
+      }
+
+      if (!currentUser) {
+        pendingCheckoutAfterAuth = true;
+        toggleCartDrawer(false);
+        openAuthModal("Please sign in or create an account before checking out.");
+        return;
+      }
+
+      toggleCartDrawer(false);
+      openCheckoutModal();
+    }
+
+    function openCheckoutModal() {
+      const modal = document.getElementById("checkoutModal");
+      const subtotal = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+      document.getElementById("modalCheckoutTotal").textContent = formatNaira(subtotal);
+
+      if (currentUser) {
+        document.getElementById("checkoutUserDisplay").textContent = `${currentUser.name} (${currentUser.email})`;
+        document.getElementById("custFullName").value = currentUser.name || "";
+        document.getElementById("custEmail").value = currentUser.email || "";
+        document.getElementById("custPhone").value = currentUser.phone || "";
+        document.getElementById("custAddress").value = currentUser.address || "";
+      }
+
+      modal.classList.remove("hidden");
+    }
+
+    function closeCheckoutModal() {
+      document.getElementById("checkoutModal").classList.add("hidden");
+    }
+
+    function handleCheckoutSubmit(e) {
+      e.preventDefault();
+
+      if (!currentUser) {
+        closeCheckoutModal();
+        openAuthModal("Please sign in before placing order.");
+        return;
+      }
+
+      const bank = document.getElementById("customerBankSelect").value;
+      const name = document.getElementById("custFullName").value.trim();
+      const phone = document.getElementById("custPhone").value.trim();
+      const email = document.getElementById("custEmail").value.trim();
+      const address = document.getElementById("custAddress").value.trim();
+      const state = document.getElementById("custState").value;
+      const speed = document.getElementById("custDeliverySpeed").value;
+
+      if (!bank) {
+        alert("Please select the bank you are transferring from.");
+        return;
+      }
+
+      const totalAmount = cart.reduce((acc, item) => acc + (item.price * item.quantity), 0);
+      const orderId = "CW-" + Math.floor(100000 + Math.random() * 900000);
+
+      const newOrder = {
+        orderId: orderId,
+        date: new Date().toLocaleDateString('en-GB', { day: 'numeric', month: 'short', year: 'numeric' }),
+        timestamp: Date.now(),
+        userId: currentUser.id,
+        customer: { name, phone, email, address, state },
+        bankTransfer: {
+          customerBank: bank,
+          storeBank: "OPay",
+          accountNumber: "7045960867",
+          accountName: "Cavalli Wears"
+        },
+        deliverySpeed: speed,
+        items: [...cart],
+        totalAmount: totalAmount,
+        status: "Pending Transfer Verification"
+      };
+
+      orders.unshift(newOrder);
+      localStorage.setItem("cavalli_orders", JSON.stringify(orders));
+
+      // Clear cart
+      cart = [];
+      saveCart();
+      updateCartUI();
+      closeCheckoutModal();
+
+      // Show order confirmation
+      document.getElementById("successOrderId").textContent = "#" + orderId;
+      document.getElementById("successOrderTotal").textContent = formatNaira(totalAmount);
+      document.getElementById("orderSuccessModal").classList.remove("hidden");
+    }
+
+    function closeOrderSuccessModal() {
+      document.getElementById("orderSuccessModal").classList.add("hidden");
+    }
+
+    // -------------------------------------------------------------
+    // NIGERIAN BANKS LIST
+    // -------------------------------------------------------------
+    function populateBanksList(filterQuery = "") {
+      const select = document.getElementById("customerBankSelect");
+      if (!select) return;
+
+      const q = filterQuery.toLowerCase().trim();
+      const filtered = NIGERIAN_BANKS.filter(b => 
+        b.name.toLowerCase().includes(q) || b.category.toLowerCase().includes(q)
+      );
+
+      const commercial = filtered.filter(b => b.category === "Commercial");
+      const fintech = filtered.filter(b => b.category.includes("Fintech") || b.category.includes("Microfinance"));
+
+      let html = `<option value="" disabled selected>-- Select Your Bank (${filtered.length} Banks Available) --</option>`;
+
+      if (commercial.length > 0) {
+        html += `<optgroup label="🏦 Nigerian Commercial Banks">`;
+        commercial.forEach(b => {
+          html += `<option value="${b.name}">${b.name}</option>`;
+        });
+        html += `</optgroup>`;
+      }
+
+      if (fintech.length > 0) {
+        html += `<optgroup label="📱 Digital, Fintech & Microfinance Banks (OPay, PalmPay, Kuda...)">`;
+        fintech.forEach(b => {
+          html += `<option value="${b.name}">${b.name}</option>`;
+        });
+        html += `</optgroup>`;
+      }
+
+      select.innerHTML = html;
+    }
+
+    // -------------------------------------------------------------
+    // USER AUTHENTICATION
+    // -------------------------------------------------------------
+    function updateAuthNavUI() {
+      const container = document.getElementById("userNavContainer");
+      if (!container) return;
+
+      if (currentUser) {
+        container.innerHTML = `
+          <button 
+            onclick="openCustomerProfileModal()" 
+            class="flex items-center gap-2 bg-stone-100 hover:bg-stone-200 text-stone-900 px-3 py-2 rounded-xl text-xs font-bold transition border border-stone-200"
+            title="My Cavalli Account"
+          >
+            <div class="w-6 h-6 rounded-full bg-amber-500 text-stone-950 flex items-center justify-center font-black text-[11px]">
+              ${currentUser.name.charAt(0).toUpperCase()}
+            </div>
+            <span class="max-w-[90px] truncate hidden sm:inline">${currentUser.name.split(" ")[0]}</span>
+          </button>
+        `;
+      } else {
+        container.innerHTML = `
+          <button 
+            onclick="openAuthModal()" 
+            class="inline-flex items-center gap-1.5 bg-stone-100 hover:bg-amber-50 text-stone-800 hover:text-amber-800 px-3 py-2.5 rounded-xl font-bold text-xs border border-stone-200 transition active:scale-95"
+          >
+            <i class="fa-solid fa-user text-amber-500 text-sm"></i>
+            <span class="hidden sm:inline">Sign In</span>
+          </button>
+        `;
+      }
+    }
+
+    function openAuthModal(msg = "") {
+      const modal = document.getElementById("authModal");
+      switchAuthTab("login");
+      modal.classList.remove("hidden");
+      if (msg) showToast(msg);
+    }
+
+    function closeAuthModal() {
+      document.getElementById("authModal").classList.add("hidden");
+    }
+
+    function switchAuthTab(tab) {
+      const loginTab = document.getElementById("authTabLogin");
+      const signupTab = document.getElementById("authTabSignup");
+      const loginForm = document.getElementById("loginForm");
+      const signupForm = document.getElementById("signupForm");
+      const title = document.getElementById("authModalTitle");
+
+      if (tab === "login") {
+        loginTab.className = "flex-1 py-2 rounded-lg bg-white shadow-xs text-stone-950 transition font-bold";
+        signupTab.className = "flex-1 py-2 rounded-lg text-stone-500 hover:text-stone-950 transition font-bold";
+        loginForm.classList.remove("hidden");
+        signupForm.classList.add("hidden");
+        title.textContent = "Customer Sign In";
+      } else {
+        signupTab.className = "flex-1 py-2 rounded-lg bg-white shadow-xs text-stone-950 transition font-bold";
+        loginTab.className = "flex-1 py-2 rounded-lg text-stone-500 hover:text-stone-950 transition font-bold";
+        signupForm.classList.remove("hidden");
+        loginForm.classList.add("hidden");
+        title.textContent = "Create Customer Account";
+      }
+    }
+
+    function handleLoginSubmit(e) {
+      e.preventDefault();
+      const email = document.getElementById("loginEmail").value.trim().toLowerCase();
+      const pass = document.getElementById("loginPassword").value;
+
+      const users = JSON.parse(localStorage.getItem("cavalli_users") || "[]");
+      const matched = users.find(u => u.email.toLowerCase() === email && u.password === pass);
+
+      if (matched) {
+        currentUser = matched;
+        localStorage.setItem("cavalli_current_user", JSON.stringify(currentUser));
+        closeAuthModal();
+        updateAuthNavUI();
+        showToast(`Welcome back, ${currentUser.name}!`);
+
+        if (pendingCheckoutAfterAuth) {
+          pendingCheckoutAfterAuth = false;
+          openCheckoutModal();
+        }
+      } else {
+        alert("Invalid email or password. If you don't have an account, please switch to Create Account.");
+      }
+    }
+
+    function handleSignupSubmit(e) {
+      e.preventDefault();
+      const name = document.getElementById("signupName").value.trim();
+      const email = document.getElementById("signupEmail").value.trim().toLowerCase();
+      const phone = document.getElementById("signupPhone").value.trim();
+      const address = document.getElementById("signupAddress").value.trim();
+      const pass = document.getElementById("signupPassword").value;
+
+      const users = JSON.parse(localStorage.getItem("cavalli_users") || "[]");
+      if (users.find(u => u.email.toLowerCase() === email)) {
+        alert("An account with this email already exists. Please sign in.");
+        switchAuthTab("login");
+        return;
+      }
+
+      const newUser = {
+        id: "USR-" + Date.now(),
+        name,
+        email,
+        phone,
+        address,
+        password: pass,
+        createdAt: new Date().toISOString()
+      };
+
+      users.push(newUser);
+      localStorage.setItem("cavalli_users", JSON.stringify(users));
+      currentUser = newUser;
+      localStorage.setItem("cavalli_current_user", JSON.stringify(currentUser));
+
+      closeAuthModal();
+      updateAuthNavUI();
+      showToast(`Account created! Welcome, ${name}`);
+
+      if (pendingCheckoutAfterAuth) {
+        pendingCheckoutAfterAuth = false;
+        openCheckoutModal();
+      }
+    }
+
+    function handleLogout() {
+      currentUser = null;
+      localStorage.removeItem("cavalli_current_user");
+      closeCustomerProfileModal();
+      updateAuthNavUI();
+      showToast("Signed out successfully");
+    }
+
+    function openCustomerProfileModal() {
+      if (!currentUser) {
+        openAuthModal();
+        return;
+      }
+
+      document.getElementById("custAvatarLetter").textContent = currentUser.name.charAt(0).toUpperCase();
+      document.getElementById("custProfileName").textContent = currentUser.name;
+      document.getElementById("custProfileEmail").textContent = currentUser.email;
+      document.getElementById("custProfilePhone").textContent = currentUser.phone;
+      document.getElementById("custProfileAddress").textContent = currentUser.address;
+
+      const userOrders = orders.filter(o => o.customer && (o.customer.email === currentUser.email || o.userId === currentUser.id));
+      document.getElementById("custMyOrdersCount").textContent = userOrders.length;
+
+      const ordersContainer = document.getElementById("custMyOrdersContainer");
+      const noOrders = document.getElementById("custNoOrders");
+
+      if (userOrders.length === 0) {
+        ordersContainer.innerHTML = "";
+        noOrders.classList.remove("hidden");
+      } else {
+        noOrders.classList.add("hidden");
+        ordersContainer.innerHTML = userOrders.map(o => `
+          <div class="bg-stone-50 border border-stone-200 rounded-2xl p-3.5 space-y-2 text-xs">
+            <div class="flex items-center justify-between border-b border-stone-200/80 pb-2">
+              <div>
+                <span class="font-mono font-bold text-stone-900">#${o.orderId}</span>
+                <span class="text-[11px] text-stone-400 ml-2">${o.date}</span>
+              </div>
+              <span class="font-bold text-amber-700">${formatNaira(o.totalAmount)}</span>
+            </div>
+            <div class="flex justify-between items-center text-[11px]">
+              <span class="text-stone-500">Status: <strong class="text-stone-800">${o.status}</strong></span>
+              <span class="text-stone-500">Payment: <strong class="text-stone-800">OPay Transfer</strong></span>
+            </div>
+            <div class="text-[11px] text-stone-600 pl-1 pt-1 border-t border-stone-100">
+              ${o.items.map(i => `${i.quantity}x ${i.title}`).join(", ")}
+            </div>
+          </div>
+        `).join('');
+      }
+
+      document.getElementById("customerProfileModal").classList.remove("hidden");
+    }
+
+    function closeCustomerProfileModal() {
+      document.getElementById("customerProfileModal").classList.add("hidden");
+    }
+
+    // -------------------------------------------------------------
+    // QUICK VIEW MODAL
+    // -------------------------------------------------------------
+    function openQuickView(productId) {
+      const prod = products.find(p => p.id === productId);
+      if (!prod) return;
+
+      currentQvProduct = prod;
+      currentQvQty = 1;
+
+      document.getElementById("qvImage").src = prod.image;
+      document.getElementById("qvCategory").textContent = prod.category;
+      document.getElementById("qvRating").textContent = prod.rating || 5.0;
+      document.getElementById("qvTitle").textContent = prod.title;
+      document.getElementById("qvDescription").textContent = prod.description;
+      document.getElementById("qvPrice").textContent = formatNaira(prod.price);
+      document.getElementById("qvQtyDisplay").textContent = "1";
+
+      const badge = document.getElementById("qvBadge");
+      if (prod.badge) {
+        badge.textContent = prod.badge;
+        badge.classList.remove("hidden");
+      } else {
+        badge.classList.add("hidden");
+      }
+
+      const addBtn = document.getElementById("qvAddToCartBtn");
+      addBtn.onclick = () => {
+        for (let i = 0; i < currentQvQty; i++) {
+          quickAddToCart(prod.id);
+        }
+        closeQuickViewModal();
+      };
+
+      document.getElementById("quickViewModal").classList.remove("hidden");
+    }
+
+    function changeQvQty(delta) {
+      currentQvQty = Math.max(1, currentQvQty + delta);
+      document.getElementById("qvQtyDisplay").textContent = currentQvQty;
+    }
+
+    function closeQuickViewModal() {
+      document.getElementById("quickViewModal").classList.add("hidden");
+    }
+
+    // -------------------------------------------------------------
+    // HELPERS & TOAST
+    // -------------------------------------------------------------
+    function copyToClipboard(text) {
+      navigator.clipboard.writeText(text).then(() => {
+        showToast(`Copied OPay Account: ${text}`);
+      }).catch(() => {
+        showToast(`Account: ${text}`);
+      });
+    }
+
+    let toastTimeout = null;
+    function showToast(message) {
+      const toast = document.getElementById("toastNotification");
+      const msg = document.getElementById("toastMessage");
+      if (!toast || !msg) return;
+
+      msg.textContent = message;
+      toast.classList.remove("translate-y-24", "opacity-0");
+      toast.classList.add("translate-y-0", "opacity-100");
+
+      if (toastTimeout) clearTimeout(toastTimeout);
+      toastTimeout = setTimeout(() => {
+        toast.classList.remove("translate-y-0", "opacity-100");
+        toast.classList.add("translate-y-24", "opacity-0");
+      }, 2500);
+    }
+
+    // Initialize on DOM ready
+    document.addEventListener("DOMContentLoaded", initSearchPage);
+  </script>
+</body>
+</html>
+
